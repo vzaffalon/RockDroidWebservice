@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @sample_photo.uuid %>
+</p>
+
+<p>
+  <strong>Base64image:</strong>
+  <%= @sample_photo.base64image %>
+</p>
+
+<p>
+  <strong>Filename:</strong>
+  <%= @sample_photo.filename %>
+</p>
+
+<p>
+  <strong>Sample uuid:</strong>
+  <%= @sample_photo.sample_uuid %>
+</p>
+
+<%= link_to 'Edit', edit_sample_photo_path(@sample_photo) %> |
+<%= link_to 'Back', sample_photos_path %>

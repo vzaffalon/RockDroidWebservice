@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  base64image: MyText
+  filename: MyString
+
+two:
+  uuid: MyString
+  base64image: MyText
+  filename: MyString

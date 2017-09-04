@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @outcrop.uuid %>
+</p>
+
+<p>
+  <strong>Altitude:</strong>
+  <%= @outcrop.altitude %>
+</p>
+
+<p>
+  <strong>Date time:</strong>
+  <%= @outcrop.date_time %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @outcrop.description %>
+</p>
+
+<p>
+  <strong>Horizontal datum:</strong>
+  <%= @outcrop.horizontal_datum %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @outcrop.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @outcrop.longitude %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @outcrop.name %>
+</p>
+
+<p>
+  <strong>Toponomy:</strong>
+  <%= @outcrop.toponomy %>
+</p>
+
+<p>
+  <strong>Stage uuid:</strong>
+  <%= @outcrop.stage_uuid %>
+</p>
+
+<%= link_to 'Edit', edit_outcrop_path(@outcrop) %> |
+<%= link_to 'Back', outcrops_path %>

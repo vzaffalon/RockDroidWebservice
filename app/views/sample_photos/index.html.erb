@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sample Photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Base64image</th>
+      <th>Filename</th>
+      <th>Sample uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sample_photos.each do |sample_photo| %>
+      <tr>
+        <td><%= sample_photo.uuid %></td>
+        <td><%= sample_photo.base64image %></td>
+        <td><%= sample_photo.filename %></td>
+        <td><%= sample_photo.sample_uuid %></td>
+        <td><%= link_to 'Show', sample_photo %></td>
+        <td><%= link_to 'Edit', edit_sample_photo_path(sample_photo) %></td>
+        <td><%= link_to 'Destroy', sample_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sample Photo', new_sample_photo_path %>

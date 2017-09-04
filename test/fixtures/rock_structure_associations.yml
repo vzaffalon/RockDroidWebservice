@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  structure_uuid: MyString
+  rock_uuid: MyString
+  outcrop_uuid: MyString
+
+two:
+  uuid: MyString
+  structure_uuid: MyString
+  rock_uuid: MyString
+  outcrop_uuid: MyString

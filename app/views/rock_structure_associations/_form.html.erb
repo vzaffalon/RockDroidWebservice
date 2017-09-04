@@ -1,0 +1,37 @@
+<%= form_for(rock_structure_association) do |f| %>
+  <% if rock_structure_association.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rock_structure_association.errors.count, "error") %> prohibited this rock_structure_association from being saved:</h2>
+
+      <ul>
+      <% rock_structure_association.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uuid %>
+    <%= f.text_field :uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :structure_uuid %>
+    <%= f.text_field :structure_uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :rock_uuid %>
+    <%= f.text_field :rock_uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :outcrop_uuid %>
+    <%= f.text_field :outcrop_uuid %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  composition: MyString
+  degree: MyString
+  mineralogy: MyString
+  name: MyString
+  nomenclature: MyString
+  size: MyString
+  texture: MyString
+  trama: MyString
+  type: 
+  outcrop_uuid: MyString
+
+two:
+  uuid: MyString
+  composition: MyString
+  degree: MyString
+  mineralogy: MyString
+  name: MyString
+  nomenclature: MyString
+  size: MyString
+  texture: MyString
+  trama: MyString
+  type: 
+  outcrop_uuid: MyString

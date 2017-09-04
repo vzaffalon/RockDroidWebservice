@@ -1,0 +1,37 @@
+<%= form_for(outcrop_photo) do |f| %>
+  <% if outcrop_photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(outcrop_photo.errors.count, "error") %> prohibited this outcrop_photo from being saved:</h2>
+
+      <ul>
+      <% outcrop_photo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uuid %>
+    <%= f.text_field :uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :base64image %>
+    <%= f.text_area :base64image %>
+  </div>
+
+  <div class="field">
+    <%= f.label :filename %>
+    <%= f.text_field :filename %>
+  </div>
+
+  <div class="field">
+    <%= f.label :outcrop_uuid %>
+    <%= f.text_field :outcrop_uuid %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rocks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Composition</th>
+      <th>Degree</th>
+      <th>Mineralogy</th>
+      <th>Name</th>
+      <th>Nomenclature</th>
+      <th>Size</th>
+      <th>Texture</th>
+      <th>Trama</th>
+      <th>Type</th>
+      <th>Outcrop uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rocks.each do |rock| %>
+      <tr>
+        <td><%= rock.uuid %></td>
+        <td><%= rock.composition %></td>
+        <td><%= rock.degree %></td>
+        <td><%= rock.mineralogy %></td>
+        <td><%= rock.name %></td>
+        <td><%= rock.nomenclature %></td>
+        <td><%= rock.size %></td>
+        <td><%= rock.texture %></td>
+        <td><%= rock.trama %></td>
+        <td><%= rock.type %></td>
+        <td><%= rock.outcrop_uuid %></td>
+        <td><%= link_to 'Show', rock %></td>
+        <td><%= link_to 'Edit', edit_rock_path(rock) %></td>
+        <td><%= link_to 'Destroy', rock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rock', new_rock_path %>

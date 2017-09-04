@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uui: MyString
+  name: MyString
+  outcrop_uuid: MyString
+
+two:
+  uui: MyString
+  name: MyString
+  outcrop_uuid: MyString

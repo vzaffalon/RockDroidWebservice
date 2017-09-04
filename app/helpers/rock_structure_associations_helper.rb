@@ -1,0 +1,2 @@
+module RockStructureAssociationsHelper
+end

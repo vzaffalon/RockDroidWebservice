@@ -1,0 +1,67 @@
+<%= form_for(outcrop) do |f| %>
+  <% if outcrop.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(outcrop.errors.count, "error") %> prohibited this outcrop from being saved:</h2>
+
+      <ul>
+      <% outcrop.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uuid %>
+    <%= f.text_field :uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :altitude %>
+    <%= f.text_field :altitude %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date_time %>
+    <%= f.text_field :date_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :horizontal_datum %>
+    <%= f.text_field :horizontal_datum %>
+  </div>
+
+  <div class="field">
+    <%= f.label :latitude %>
+    <%= f.text_field :latitude %>
+  </div>
+
+  <div class="field">
+    <%= f.label :longitude %>
+    <%= f.text_field :longitude %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :toponomy %>
+    <%= f.text_field :toponomy %>
+  </div>
+
+  <div class="field">
+    <%= f.label :stage_uuid %>
+    <%= f.text_field :stage_uuid %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

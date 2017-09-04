@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Outcrop Photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Base64image</th>
+      <th>Filename</th>
+      <th>Outcrop uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @outcrop_photos.each do |outcrop_photo| %>
+      <tr>
+        <td><%= outcrop_photo.uuid %></td>
+        <td><%= outcrop_photo.base64image %></td>
+        <td><%= outcrop_photo.filename %></td>
+        <td><%= outcrop_photo.outcrop_uuid %></td>
+        <td><%= link_to 'Show', outcrop_photo %></td>
+        <td><%= link_to 'Edit', edit_outcrop_photo_path(outcrop_photo) %></td>
+        <td><%= link_to 'Destroy', outcrop_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Outcrop Photo', new_outcrop_photo_path %>

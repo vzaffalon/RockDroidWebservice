@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rock Structure Associations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Structure uuid</th>
+      <th>Rock uuid</th>
+      <th>Outcrop uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rock_structure_associations.each do |rock_structure_association| %>
+      <tr>
+        <td><%= rock_structure_association.uuid %></td>
+        <td><%= rock_structure_association.structure_uuid %></td>
+        <td><%= rock_structure_association.rock_uuid %></td>
+        <td><%= rock_structure_association.outcrop_uuid %></td>
+        <td><%= link_to 'Show', rock_structure_association %></td>
+        <td><%= link_to 'Edit', edit_rock_structure_association_path(rock_structure_association) %></td>
+        <td><%= link_to 'Destroy', rock_structure_association, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rock Structure Association', new_rock_structure_association_path %>

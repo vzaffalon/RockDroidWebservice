@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Structures</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Description</th>
+      <th>Dip</th>
+      <th>Dip direction</th>
+      <th>Name</th>
+      <th>Phase</th>
+      <th>Type</th>
+      <th>Outcrop uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @structures.each do |structure| %>
+      <tr>
+        <td><%= structure.uuid %></td>
+        <td><%= structure.description %></td>
+        <td><%= structure.dip %></td>
+        <td><%= structure.dip_direction %></td>
+        <td><%= structure.name %></td>
+        <td><%= structure.phase %></td>
+        <td><%= structure.type %></td>
+        <td><%= structure.outcrop_uuid %></td>
+        <td><%= link_to 'Show', structure %></td>
+        <td><%= link_to 'Edit', edit_structure_path(structure) %></td>
+        <td><%= link_to 'Destroy', structure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Structure', new_structure_path %>

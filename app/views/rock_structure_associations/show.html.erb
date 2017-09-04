@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @rock_structure_association.uuid %>
+</p>
+
+<p>
+  <strong>Structure uuid:</strong>
+  <%= @rock_structure_association.structure_uuid %>
+</p>
+
+<p>
+  <strong>Rock uuid:</strong>
+  <%= @rock_structure_association.rock_uuid %>
+</p>
+
+<p>
+  <strong>Outcrop uuid:</strong>
+  <%= @rock_structure_association.outcrop_uuid %>
+</p>
+
+<%= link_to 'Edit', edit_rock_structure_association_path(@rock_structure_association) %> |
+<%= link_to 'Back', rock_structure_associations_path %>

@@ -1,0 +1,37 @@
+<%= form_for(rock_photo) do |f| %>
+  <% if rock_photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rock_photo.errors.count, "error") %> prohibited this rock_photo from being saved:</h2>
+
+      <ul>
+      <% rock_photo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uuid %>
+    <%= f.text_field :uuid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :base64image %>
+    <%= f.text_area :base64image %>
+  </div>
+
+  <div class="field">
+    <%= f.label :filename %>
+    <%= f.text_field :filename %>
+  </div>
+
+  <div class="field">
+    <%= f.label :rock_uuid %>
+    <%= f.text_field :rock_uuid %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module OutcropsHelper
+end

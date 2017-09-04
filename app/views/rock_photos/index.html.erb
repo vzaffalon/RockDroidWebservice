@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rock Photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Base64image</th>
+      <th>Filename</th>
+      <th>Rock uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rock_photos.each do |rock_photo| %>
+      <tr>
+        <td><%= rock_photo.uuid %></td>
+        <td><%= rock_photo.base64image %></td>
+        <td><%= rock_photo.filename %></td>
+        <td><%= rock_photo.rock_uuid %></td>
+        <td><%= link_to 'Show', rock_photo %></td>
+        <td><%= link_to 'Edit', edit_rock_photo_path(rock_photo) %></td>
+        <td><%= link_to 'Destroy', rock_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rock Photo', new_rock_photo_path %>

@@ -1,0 +1,2 @@
+module SamplePhotosHelper
+end
