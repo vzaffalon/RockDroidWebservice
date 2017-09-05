@@ -4,7 +4,7 @@ class RocksController < ApplicationController
   # GET /rocks
   # GET /rocks.json
   def index
-    @rocks = Rock.all
+    @rocks = Rock.paginate(page: params[:page], per_page: params[:size]).all
   end
 
   # GET /rocks/1
@@ -64,7 +64,7 @@ class RocksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rock
-      @rock = Rock.find(params[:id])
+      @rock = Rock.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

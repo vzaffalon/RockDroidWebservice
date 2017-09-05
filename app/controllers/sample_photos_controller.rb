@@ -4,12 +4,14 @@ class SamplePhotosController < ApplicationController
   # GET /sample_photos
   # GET /sample_photos.json
   def index
-    @sample_photos = SamplePhoto.all
+    @sample_photos = SamplePhoto.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @sample_photos
   end
 
   # GET /sample_photos/1
   # GET /sample_photos/1.json
   def show
+    render json: @sample_photo
   end
 
   # GET /sample_photos/new
@@ -64,7 +66,7 @@ class SamplePhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sample_photo
-      @sample_photo = SamplePhoto.find(params[:id])
+      @sample_photo = SamplePhoto.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

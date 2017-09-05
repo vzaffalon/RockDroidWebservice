@@ -4,12 +4,14 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.json
   def index
-    @samples = Sample.all
+    @samples = Sample.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @samples
   end
 
   # GET /samples/1
   # GET /samples/1.json
   def show
+    render json: @sample
   end
 
   # GET /samples/new
@@ -64,7 +66,7 @@ class SamplesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sample
-      @sample = Sample.find(params[:id])
+      @sample = Sample.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

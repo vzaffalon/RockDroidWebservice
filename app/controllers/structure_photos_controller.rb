@@ -4,12 +4,14 @@ class StructurePhotosController < ApplicationController
   # GET /structure_photos
   # GET /structure_photos.json
   def index
-    @structure_photos = StructurePhoto.all
+    @structure_photos = StructurePhoto.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @structure_photos
   end
 
   # GET /structure_photos/1
   # GET /structure_photos/1.json
   def show
+    render json: @structure_photo
   end
 
   # GET /structure_photos/new
@@ -64,7 +66,7 @@ class StructurePhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_structure_photo
-      @structure_photo = StructurePhoto.find(params[:id])
+      @structure_photo = StructurePhoto.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

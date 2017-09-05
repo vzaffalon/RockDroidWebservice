@@ -4,12 +4,14 @@ class OutcropPhotosController < ApplicationController
   # GET /outcrop_photos
   # GET /outcrop_photos.json
   def index
-    @outcrop_photos = OutcropPhoto.all
+    @outcrop_photos = OutcropPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @outcrop_photos
   end
 
   # GET /outcrop_photos/1
   # GET /outcrop_photos/1.json
   def show
+    render json: @outcrop_photo
   end
 
   # GET /outcrop_photos/new
@@ -64,7 +66,7 @@ class OutcropPhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_outcrop_photo
-      @outcrop_photo = OutcropPhoto.find(params[:id])
+      @outcrop_photo = OutcropPhoto.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

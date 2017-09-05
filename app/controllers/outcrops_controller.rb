@@ -4,12 +4,14 @@ class OutcropsController < ApplicationController
   # GET /outcrops
   # GET /outcrops.json
   def index
-    @outcrops = Outcrop.all
+    @outcrops = Outcrop.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @outcrops
   end
 
   # GET /outcrops/1
   # GET /outcrops/1.json
   def show
+    render json: @outcrop
   end
 
   # GET /outcrops/new
@@ -54,17 +56,15 @@ class OutcropsController < ApplicationController
   # DELETE /outcrops/1
   # DELETE /outcrops/1.json
   def destroy
-    @outcrop.destroy
-    respond_to do |format|
-      format.html { redirect_to outcrops_url, notice: 'Outcrop was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+     if @outcrop.destroy
+        head :no_content
+     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_outcrop
-      @outcrop = Outcrop.find(params[:id])
+      @outcrop = Outcrop.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

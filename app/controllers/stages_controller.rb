@@ -4,12 +4,14 @@ class StagesController < ApplicationController
   # GET /stages
   # GET /stages.json
   def index
-    @stages = Stage.all
+    @stages = Stage.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @stages
   end
 
   # GET /stages/1
   # GET /stages/1.json
   def show
+    render json: @stage
   end
 
   # GET /stages/new
@@ -64,7 +66,7 @@ class StagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_stage
-      @stage = Stage.find(params[:id])
+      @stage = Stage.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

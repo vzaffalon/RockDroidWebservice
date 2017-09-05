@@ -4,12 +4,14 @@ class RockPhotosController < ApplicationController
   # GET /rock_photos
   # GET /rock_photos.json
   def index
-    @rock_photos = RockPhoto.all
+    @rock_photos = RockPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @rock_photos
   end
 
   # GET /rock_photos/1
   # GET /rock_photos/1.json
   def show
+    render json: @rock_photo
   end
 
   # GET /rock_photos/new
@@ -64,7 +66,7 @@ class RockPhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rock_photo
-      @rock_photo = RockPhoto.find(params[:id])
+      @rock_photo = RockPhoto.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

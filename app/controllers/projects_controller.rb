@@ -4,12 +4,14 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @projects
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
+    render json: @project
   end
 
   # GET /projects/new
@@ -64,7 +66,7 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      @project = Project.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

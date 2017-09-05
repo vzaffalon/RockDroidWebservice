@@ -4,12 +4,14 @@ class StructuresController < ApplicationController
   # GET /structures
   # GET /structures.json
   def index
-    @structures = Structure.all
+    @structures = Structure.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @structures
   end
 
   # GET /structures/1
   # GET /structures/1.json
   def show
+    render json: @structure
   end
 
   # GET /structures/new
@@ -64,7 +66,7 @@ class StructuresController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_structure
-      @structure = Structure.find(params[:id])
+      @structure = Structure.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

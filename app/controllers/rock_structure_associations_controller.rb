@@ -4,12 +4,14 @@ class RockStructureAssociationsController < ApplicationController
   # GET /rock_structure_associations
   # GET /rock_structure_associations.json
   def index
-    @rock_structure_associations = RockStructureAssociation.all
+    @rock_structure_associations = RockStructureAssociation.paginate(page: params[:page], per_page: params[:size]).all
+    render json: @rock_structure_associations
   end
 
   # GET /rock_structure_associations/1
   # GET /rock_structure_associations/1.json
   def show
+    render json: @rock_structure_association
   end
 
   # GET /rock_structure_associations/new
@@ -64,7 +66,7 @@ class RockStructureAssociationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rock_structure_association
-      @rock_structure_association = RockStructureAssociation.find(params[:id])
+      @rock_structure_association = RockStructureAssociation.find(params[:uuid])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
