@@ -6,9 +6,9 @@ class CreateStages < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :uf
       t.string :project_id
-      t.float :persisted_time
+      t.float :persisted_time, null:false
       t.float :initial_date
-      t.float :deleted_at
+      t.integer :deleted_at
 
       t.timestamps
     end

@@ -1,6 +1,26 @@
 class StructuresController < ApplicationController
   before_action :set_structure, only: [:show, :edit, :update, :destroy]
 
+  before_action :underscore_params!
+
+  def underscore_params!
+    underscore_hash = -> (hash) do
+      hash.transform_keys!(&:underscore)
+      hash.each do |key, value|
+        if value.is_a?(ActionController::Parameters)
+          underscore_hash.call(value)
+        elsif value.is_a?(Array)
+          value.each do |item|
+            next unless item.is_a?(ActionController::Parameters)
+            underscore_hash.call(item)
+          end
+        end
+      end
+    end
+    underscore_hash.call(params)
+  end
+
+
   # GET /structures
   # GET /structures.json
   def index
@@ -44,10 +64,8 @@ class StructuresController < ApplicationController
   def update
     respond_to do |format|
       if @structure.update(structure_params)
-        format.html { redirect_to @structure, notice: 'Structure was successfully updated.' }
         format.json { render :show, status: :ok, location: @structure }
       else
-        format.html { render :edit }
         format.json { render json: @structure.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +76,6 @@ class StructuresController < ApplicationController
   def destroy
     @structure.destroy
     respond_to do |format|
-      format.html { redirect_to structures_url, notice: 'Structure was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -1,6 +1,25 @@
 class RockStructureAssociationsController < ApplicationController
   before_action :set_rock_structure_association, only: [:show, :edit, :update, :destroy]
 
+  before_action :underscore_params!
+
+  def underscore_params!
+    underscore_hash = -> (hash) do
+      hash.transform_keys!(&:underscore)
+      hash.each do |key, value|
+        if value.is_a?(ActionController::Parameters)
+          underscore_hash.call(value)
+        elsif value.is_a?(Array)
+          value.each do |item|
+            next unless item.is_a?(ActionController::Parameters)
+            underscore_hash.call(item)
+          end
+        end
+      end
+    end
+    underscore_hash.call(params)
+  end
+
   # GET /rock_structure_associations
   # GET /rock_structure_associations.json
   def index
@@ -30,10 +49,8 @@ class RockStructureAssociationsController < ApplicationController
 
     respond_to do |format|
       if @rock_structure_association.save
-        format.html { redirect_to @rock_structure_association, notice: 'Rock structure association was successfully created.' }
         format.json { render :show, status: :created, location: @rock_structure_association }
       else
-        format.html { render :new }
         format.json { render json: @rock_structure_association.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +61,8 @@ class RockStructureAssociationsController < ApplicationController
   def update
     respond_to do |format|
       if @rock_structure_association.update(rock_structure_association_params)
-        format.html { redirect_to @rock_structure_association, notice: 'Rock structure association was successfully updated.' }
         format.json { render :show, status: :ok, location: @rock_structure_association }
       else
-        format.html { render :edit }
         format.json { render json: @rock_structure_association.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +73,6 @@ class RockStructureAssociationsController < ApplicationController
   def destroy
     @rock_structure_association.destroy
     respond_to do |format|
-      format.html { redirect_to rock_structure_associations_url, notice: 'Rock structure association was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

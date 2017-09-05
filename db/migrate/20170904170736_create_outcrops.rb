@@ -11,8 +11,8 @@ class CreateOutcrops < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :toponomy
       t.string :stage_id
-      t.float :deleted_at
-      t.float :persisted_time
+      t.integer :deleted_at
+      t.float :persisted_time, null:false
 
       t.timestamps
     end

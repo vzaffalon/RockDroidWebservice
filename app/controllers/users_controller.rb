@@ -1,5 +1,26 @@
 class UsersController < ApplicationController
+  protect_from_forgery
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+
+  before_action :underscore_params!
+
+  def underscore_params!
+    underscore_hash = -> (hash) do
+      hash.transform_keys!(&:underscore)
+      hash.each do |key, value|
+        if value.is_a?(ActionController::Parameters)
+          underscore_hash.call(value)
+        elsif value.is_a?(Array)
+          value.each do |item|
+            next unless item.is_a?(ActionController::Parameters)
+            underscore_hash.call(item)
+          end
+        end
+      end
+    end
+    underscore_hash.call(params)
+  end
 
   # GET /users
   # GET /users.json
@@ -11,6 +32,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @user = User.find(email: params[:email])
     render json: @user
   end
 
@@ -26,14 +48,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    aux = user_params
+    @user = User.new(aux)
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +65,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +77,6 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,6 +89,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:uuid, :email, :name, :password_hash)
+      params.permit(:uuid, :email, :name, :password_hash, :deleted_at)
     end
 end

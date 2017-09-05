@@ -8,8 +8,8 @@ class CreateStructures < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :phase
       t.integer :type
-      t.float :deleted_at
-      t.float :persisted_time
+      t.integer :deleted_at
+      t.float :persisted_time, null:false
       t.string :outcrop_id
 
       t.timestamps

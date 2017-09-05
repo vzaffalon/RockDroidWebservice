@@ -11,9 +11,9 @@ class CreateRocks < ActiveRecord::Migration[5.0]
       t.string :texture
       t.string :trama
       t.integer :type
-      t.float :deleted_at
-      t.float :persisted_time
+      t.float :persisted_time, null:false
       t.string :outcrop_id
+      t.integer :deleted_at
 
       t.timestamps
     end

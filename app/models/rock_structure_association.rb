@@ -3,4 +3,10 @@ class RockStructureAssociation < ApplicationRecord
   belongs_to :outcrop
   belongs_to :rock
   belongs_to :structure
+
+  before_create do
+    self.persisted_time = DateTime.now.strftime('%Q')
+  end
+
+  validates_presence_of :uuid, message: 'missing_field'
 end

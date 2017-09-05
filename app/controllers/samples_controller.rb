@@ -1,6 +1,25 @@
 class SamplesController < ApplicationController
   before_action :set_sample, only: [:show, :edit, :update, :destroy]
 
+  before_action :underscore_params!
+
+  def underscore_params!
+    underscore_hash = -> (hash) do
+      hash.transform_keys!(&:underscore)
+      hash.each do |key, value|
+        if value.is_a?(ActionController::Parameters)
+          underscore_hash.call(value)
+        elsif value.is_a?(Array)
+          value.each do |item|
+            next unless item.is_a?(ActionController::Parameters)
+            underscore_hash.call(item)
+          end
+        end
+      end
+    end
+    underscore_hash.call(params)
+  end
+
   # GET /samples
   # GET /samples.json
   def index
@@ -30,10 +49,8 @@ class SamplesController < ApplicationController
 
     respond_to do |format|
       if @sample.save
-        format.html { redirect_to @sample, notice: 'Sample was successfully created.' }
         format.json { render :show, status: :created, location: @sample }
       else
-        format.html { render :new }
         format.json { render json: @sample.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +61,8 @@ class SamplesController < ApplicationController
   def update
     respond_to do |format|
       if @sample.update(sample_params)
-        format.html { redirect_to @sample, notice: 'Sample was successfully updated.' }
         format.json { render :show, status: :ok, location: @sample }
       else
-        format.html { render :edit }
         format.json { render json: @sample.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +73,6 @@ class SamplesController < ApplicationController
   def destroy
     @sample.destroy
     respond_to do |format|
-      format.html { redirect_to samples_url, notice: 'Sample was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

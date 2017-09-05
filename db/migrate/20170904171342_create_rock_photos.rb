@@ -5,8 +5,8 @@ class CreateRockPhotos < ActiveRecord::Migration[5.0]
       t.text :base64image
       t.string :filename
       t.string :rock_id
-      t.float :deleted_at
-      t.float :persisted_time
+      t.float :persisted_time, null:false
+      t.integer :deleted_at
 
       t.timestamps
     end

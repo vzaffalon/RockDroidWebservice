@@ -1,6 +1,25 @@
 class OutcropsController < ApplicationController
   before_action :set_outcrop, only: [:show, :edit, :update, :destroy]
 
+  before_action :underscore_params!
+
+  def underscore_params!
+    underscore_hash = -> (hash) do
+      hash.transform_keys!(&:underscore)
+      hash.each do |key, value|
+        if value.is_a?(ActionController::Parameters)
+          underscore_hash.call(value)
+        elsif value.is_a?(Array)
+          value.each do |item|
+            next unless item.is_a?(ActionController::Parameters)
+            underscore_hash.call(item)
+          end
+        end
+      end
+    end
+    underscore_hash.call(params)
+  end
+
   # GET /outcrops
   # GET /outcrops.json
   def index
@@ -30,10 +49,8 @@ class OutcropsController < ApplicationController
 
     respond_to do |format|
       if @outcrop.save
-        format.html { redirect_to @outcrop, notice: 'Outcrop was successfully created.' }
         format.json { render :show, status: :created, location: @outcrop }
       else
-        format.html { render :new }
         format.json { render json: @outcrop.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +61,8 @@ class OutcropsController < ApplicationController
   def update
     respond_to do |format|
       if @outcrop.update(outcrop_params)
-        format.html { redirect_to @outcrop, notice: 'Outcrop was successfully updated.' }
         format.json { render :show, status: :ok, location: @outcrop }
       else
-        format.html { render :edit }
         format.json { render json: @outcrop.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +84,6 @@ class OutcropsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def outcrop_params
-      params.require(:outcrop).permit(:uuid, :altitude, :date_time, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_uuid)
+      params.require(:outcrop).permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_uuid)
     end
 end
