@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   protect_from_forgery
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
 
   before_action :underscore_params!
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(email: params[:email])
+    @user = User.where('email = ?',params[:email]).take
     render json: @user
   end
 
