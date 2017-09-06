@@ -51,13 +51,11 @@ class UsersController < ApplicationController
     aux = user_params
     @user = User.new(aux)
 
-    respond_to do |format|
       if @user.save
-        format.json { render :show, status: :created, location: @user }
+          render :show, status: :created, location: @user
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+          render json: @user.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /users/1

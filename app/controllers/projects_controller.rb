@@ -3,6 +3,8 @@ class ProjectsController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -47,25 +49,21 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
 
-    respond_to do |format|
       if @project.save
-        format.json { render :show, status: :created, location: @project }
+          render json: @project, status: :created
       else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+          render json: @project.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
       if @project.update(project_params)
-        format.json { render :show, status: :ok, location: @project }
+          render :show, status: :ok, location: @project
       else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+          render json: @project.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /projects/1
@@ -85,6 +83,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:uuid, :name, :creator_uuid)
+      params.require(:project).permit(:uuid, :name,:user_uuid,:deleted_at,:creation_date)
     end
 end

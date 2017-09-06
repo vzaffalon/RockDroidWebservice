@@ -7,4 +7,6 @@ class User < ApplicationRecord
   end
 
   validates_presence_of :uuid, message: 'missing_field'
+  validates_presence_of :email, message: 'missing_field'
+  validates_presence_of :password_hash, message: 'missing_field'
 end

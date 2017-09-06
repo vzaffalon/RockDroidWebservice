@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904171342) do
+ActiveRecord::Schema.define(version: 20170906155609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20170904171342) do
   create_table "projects", id: false, force: :cascade do |t|
     t.string   "uuid",           null: false
     t.string   "name"
-    t.string   "creator_id"
     t.string   "user_id"
     t.integer  "deleted_at"
     t.float    "persisted_time", null: false
@@ -91,7 +90,7 @@ ActiveRecord::Schema.define(version: 20170904171342) do
     t.string   "size"
     t.string   "texture"
     t.string   "trama"
-    t.integer  "type"
+    t.integer  "rock_type"
     t.float    "persisted_time", null: false
     t.string   "outcrop_id"
     t.integer  "deleted_at"
@@ -145,6 +144,7 @@ ActiveRecord::Schema.define(version: 20170904171342) do
     t.float    "persisted_time", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "structure_id"
     t.index ["uuid"], name: "index_structure_photos_on_uuid", using: :btree
   end
 
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20170904171342) do
     t.float    "dip_direction"
     t.string   "name"
     t.string   "phase"
-    t.integer  "type"
+    t.integer  "structure_type"
     t.integer  "deleted_at"
     t.float    "persisted_time", null: false
     t.string   "outcrop_id"
