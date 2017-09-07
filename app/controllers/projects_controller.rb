@@ -59,10 +59,11 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+
       if @project.update(project_params)
-          render :show, status: :ok, location: @project
+        render json: @project, status: :ok
       else
-          render json: @project.errors, status: :unprocessable_entity
+        render json: @project.errors, status: :unprocessable_entity
       end
   end
 
@@ -83,6 +84,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:uuid, :name,:user_uuid,:deleted_at,:creation_date)
+      params.permit(:uuid, :name,:user_id,:deleted_at,:creation_date)
     end
 end

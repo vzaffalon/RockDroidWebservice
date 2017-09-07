@@ -4,7 +4,7 @@ class CreateStructurePhotos < ActiveRecord::Migration[5.0]
       t.string :uuid, unique: true, index: true, null:false
       t.text :base64image
       t.string :filename
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
       t.float :persisted_time, null:false
 
       t.timestamps

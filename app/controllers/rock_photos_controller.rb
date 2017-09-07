@@ -3,6 +3,8 @@ class RockPhotosController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -47,25 +49,21 @@ class RockPhotosController < ApplicationController
   def create
     @rock_photo = RockPhoto.new(rock_photo_params)
 
-    respond_to do |format|
       if @rock_photo.save
-        format.json { render :show, status: :created, location: @rock_photo }
+          render json: @rock_photo, status: :created
       else
-        format.json { render json: @rock_photo.errors, status: :unprocessable_entity }
+          render json: @rock_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /rock_photos/1
   # PATCH/PUT /rock_photos/1.json
   def update
-    respond_to do |format|
       if @rock_photo.update(rock_photo_params)
-        format.json { render :show, status: :ok, location: @rock_photo }
+        render json: @rock_photo, status: :ok
       else
-        format.json { render json: @rock_photo.errors, status: :unprocessable_entity }
+        render json: @rock_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /rock_photos/1
@@ -85,6 +83,6 @@ class RockPhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_photo_params
-      params.require(:rock_photo).permit(:uuid, :base64image, :filename, :rock_uuid)
+      params.permit(:uuid, :base64image, :filename, :rock_id)
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906155609) do
+ActiveRecord::Schema.define(version: 20170906221106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "filename"
     t.string   "outcrop_id"
     t.float    "persisted_time", null: false
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_outcrop_photos_on_uuid", using: :btree
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "name"
     t.string   "toponomy"
     t.string   "stage_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.float    "persisted_time",   null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -49,10 +49,11 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "uuid",           null: false
     t.string   "name"
     t.string   "user_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.float    "persisted_time", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.bigint   "creation_date"
     t.index ["uuid"], name: "index_projects_on_uuid", using: :btree
   end
 
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "filename"
     t.string   "rock_id"
     t.float    "persisted_time", null: false
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_rock_photos_on_uuid", using: :btree
@@ -74,7 +75,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "structure_id"
     t.string   "rock_id"
     t.string   "outcrop_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_rock_structure_associations_on_uuid", using: :btree
@@ -93,7 +94,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.integer  "rock_type"
     t.float    "persisted_time", null: false
     t.string   "outcrop_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_rocks_on_uuid", using: :btree
@@ -105,7 +106,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "filename"
     t.float    "persisted_time", null: false
     t.string   "sample_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_sample_photos_on_uuid", using: :btree
@@ -116,7 +117,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "name"
     t.float    "persisted_time", null: false
     t.string   "outcrop_id"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_samples_on_uuid", using: :btree
@@ -130,7 +131,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "project_id"
     t.float    "persisted_time", null: false
     t.float    "initial_date"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_stages_on_uuid", using: :btree
@@ -140,7 +141,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "uuid",           null: false
     t.text     "base64image"
     t.string   "filename"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.float    "persisted_time", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -156,7 +157,7 @@ ActiveRecord::Schema.define(version: 20170906155609) do
     t.string   "name"
     t.string   "phase"
     t.integer  "structure_type"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.float    "persisted_time", null: false
     t.string   "outcrop_id"
     t.datetime "created_at",     null: false
@@ -167,13 +168,12 @@ ActiveRecord::Schema.define(version: 20170906155609) do
   create_table "users", id: false, force: :cascade do |t|
     t.string   "uuid",           null: false
     t.string   "email"
-    t.integer  "deleted_at"
+    t.bigint   "deleted_at"
     t.float    "persisted_time", null: false
     t.string   "name"
     t.string   "password_hash"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["uuid"], name: "index_users_on_uuid", using: :btree
   end
 
 end

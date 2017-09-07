@@ -5,7 +5,7 @@ class CreateSamples < ActiveRecord::Migration[5.0]
       t.string :name
       t.float :persisted_time, null:false
       t.string :outcrop_id
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
 
       t.timestamps
     end

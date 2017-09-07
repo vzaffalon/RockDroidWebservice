@@ -8,7 +8,7 @@ class CreateStages < ActiveRecord::Migration[5.0]
       t.string :project_id
       t.float :persisted_time, null:false
       t.float :initial_date
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
 
       t.timestamps
     end

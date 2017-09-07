@@ -6,7 +6,7 @@ class CreateSamplePhotos < ActiveRecord::Migration[5.0]
       t.string :filename
       t.float :persisted_time, null:false
       t.string :sample_id
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
 
       t.timestamps
     end

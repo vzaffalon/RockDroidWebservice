@@ -3,6 +3,8 @@ class StagesController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -47,27 +49,21 @@ class StagesController < ApplicationController
   def create
     @stage = Stage.new(stage_params)
 
-    respond_to do |format|
       if @stage.save
-        format.html { redirect_to @stage, notice: 'Stage was successfully created.' }
-        format.json { render :show, status: :created, location: @stage }
+        render json: @stage, status: :created
       else
-        format.html { render :new }
-        format.json { render json: @stage.errors, status: :unprocessable_entity }
+        render json: @stage.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /stages/1
   # PATCH/PUT /stages/1.json
   def update
-    respond_to do |format|
       if @stage.update(stage_params)
-        format.json { render :show, status: :ok, location: @stage }
+        render json: @stage, status: :ok
       else
-        format.json { render json: @stage.errors, status: :unprocessable_entity }
+        render json: @stage.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /stages/1
@@ -87,6 +83,6 @@ class StagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stage_params
-      params.require(:stage).permit(:uuid, :city, :initialDate, :name, :uf, :project_uuid)
+      params.permit(:uuid, :city, :initialDate, :name, :uf, :project_id)
     end
 end

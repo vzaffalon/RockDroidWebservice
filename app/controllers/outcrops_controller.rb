@@ -3,6 +3,8 @@ class OutcropsController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -45,27 +47,23 @@ class OutcropsController < ApplicationController
   # POST /outcrops
   # POST /outcrops.json
   def create
-    @outcrop = Outcrop.new(outcrop_params)
+      @outcrop = Outcrop.new(outcrop_params)
 
-    respond_to do |format|
       if @outcrop.save
-        format.json { render :show, status: :created, location: @outcrop }
+        render json: @outcrop, status: :created
       else
-        format.json { render json: @outcrop.errors, status: :unprocessable_entity }
+        render json: @outcrop.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /outcrops/1
   # PATCH/PUT /outcrops/1.json
   def update
-    respond_to do |format|
       if @outcrop.update(outcrop_params)
-        format.json { render :show, status: :ok, location: @outcrop }
+        render json: @outcrop, status: :ok
       else
         format.json { render json: @outcrop.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # DELETE /outcrops/1
@@ -84,6 +82,6 @@ class OutcropsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def outcrop_params
-      params.require(:outcrop).permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_uuid)
+      params.permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_id)
     end
 end

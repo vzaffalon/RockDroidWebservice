@@ -2,8 +2,9 @@ class UsersController < ApplicationController
   protect_from_forgery
   before_action :set_user, only: [:edit, :update, :destroy]
 
-
   before_action :underscore_params!
+
+  skip_before_filter :verify_authenticity_token
 
   def underscore_params!
     underscore_hash = -> (hash) do
@@ -61,13 +62,11 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
       if @user.update(user_params)
-        format.json { render :show, status: :ok, location: @user }
+        render json: @user, status: :ok, location: @user
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        render json: @user.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /users/1

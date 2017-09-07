@@ -3,6 +3,8 @@ class RockStructureAssociationsController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -47,25 +49,21 @@ class RockStructureAssociationsController < ApplicationController
   def create
     @rock_structure_association = RockStructureAssociation.new(rock_structure_association_params)
 
-    respond_to do |format|
       if @rock_structure_association.save
-        format.json { render :show, status: :created, location: @rock_structure_association }
+        render json:@rock_structure_association, status: :created
       else
-        format.json { render json: @rock_structure_association.errors, status: :unprocessable_entity }
+        render json: @rock_structure_association.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /rock_structure_associations/1
   # PATCH/PUT /rock_structure_associations/1.json
   def update
-    respond_to do |format|
       if @rock_structure_association.update(rock_structure_association_params)
-        format.json { render :show, status: :ok, location: @rock_structure_association }
+        render json: @rock_structure_association, status: :ok, location: @rock_structure_association
       else
-        format.json { render json: @rock_structure_association.errors, status: :unprocessable_entity }
+        render json: @rock_structure_association.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /rock_structure_associations/1
@@ -85,6 +83,6 @@ class RockStructureAssociationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_structure_association_params
-      params.require(:rock_structure_association).permit(:uuid, :structure_uuid, :rock_uuid, :outcrop_uuid)
+      params.permit(:uuid, :structure_id, :rock_id, :outcrop_id)
     end
 end

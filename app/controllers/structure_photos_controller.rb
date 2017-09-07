@@ -3,6 +3,8 @@ class StructurePhotosController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -45,27 +47,24 @@ class StructurePhotosController < ApplicationController
   # POST /structure_photos
   # POST /structure_photos.json
   def create
-    @structure_photo = StructurePhoto.new(structure_photo_params)
+     @structure_photo = StructurePhoto.new(structure_photo_params)
 
-    respond_to do |format|
       if @structure_photo.save
-        format.json { render :show, status: :created, location: @structure_photo }
+        render json: @structure_photo, status: :created
       else
-        format.json { render json: @structure_photo.errors, status: :unprocessable_entity }
+        render json: @structure_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /structure_photos/1
   # PATCH/PUT /structure_photos/1.json
   def update
-    respond_to do |format|
+
       if @structure_photo.update(structure_photo_params)
-        format.json { render :show, status: :ok, location: @structure_photo }
+        render json: @structure_photo, status: :ok
       else
-        format.json { render json: @structure_photo.errors, status: :unprocessable_entity }
+        render json: @structure_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /structure_photos/1
@@ -85,6 +84,6 @@ class StructurePhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def structure_photo_params
-      params.require(:structure_photo).permit(:uuid, :base64image, :filename)
+      params.permit(:uuid, :base64image, :filename)
     end
 end

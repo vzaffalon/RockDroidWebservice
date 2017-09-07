@@ -6,7 +6,7 @@ class CreateOutcropPhotos < ActiveRecord::Migration[5.0]
       t.string :filename
       t.string :outcrop_id
       t.float :persisted_time, null:false
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
 
       t.timestamps
     end

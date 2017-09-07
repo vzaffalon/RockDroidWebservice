@@ -6,7 +6,7 @@ class CreateRockStructureAssociations < ActiveRecord::Migration[5.0]
       t.string :structure_id
       t.string :rock_id
       t.string :outcrop_id
-      t.integer :deleted_at
+      t.integer :deleted_at, :limit => 8
 
       t.timestamps
     end

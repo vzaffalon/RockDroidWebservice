@@ -3,6 +3,8 @@ class SamplePhotosController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -47,25 +49,22 @@ class SamplePhotosController < ApplicationController
   def create
     @sample_photo = SamplePhoto.new(sample_photo_params)
 
-    respond_to do |format|
+
       if @sample_photo.save
-        format.json { render :show, status: :created, location: @sample_photo }
+        render json: @sample_photo, status: :created
       else
-        format.json { render json: @sample_photo.errors, status: :unprocessable_entity }
+        render json: @sample_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /sample_photos/1
   # PATCH/PUT /sample_photos/1.json
   def update
-    respond_to do |format|
       if @sample_photo.update(sample_photo_params)
-        format.json { render :show, status: :ok, location: @sample_photo }
+        render json: @sample_photo, status: :ok
       else
-        format.json { render json: @sample_photo.errors, status: :unprocessable_entity }
+        render json: @sample_photo.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /sample_photos/1
@@ -85,6 +84,6 @@ class SamplePhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sample_photo_params
-      params.require(:sample_photo).permit(:uuid, :base64image, :filename, :sample_uuid)
+      params.permit(:uuid, :base64image, :filename, :sample_id)
     end
 end

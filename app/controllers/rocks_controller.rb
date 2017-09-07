@@ -3,6 +3,8 @@ class RocksController < ApplicationController
 
   before_action :underscore_params!
 
+  skip_before_filter :verify_authenticity_token
+
   def underscore_params!
     underscore_hash = -> (hash) do
       hash.transform_keys!(&:underscore)
@@ -45,25 +47,21 @@ class RocksController < ApplicationController
   def create
     @rock = Rock.new(rock_params)
 
-    respond_to do |format|
       if @rock.save
-        format.json { render :show, status: :created, location: @rock }
+        render json: @rock, status: :created
       else
-        format.json { render json: @rock.errors, status: :unprocessable_entity }
+        render json: @rock.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /rocks/1
   # PATCH/PUT /rocks/1.json
   def update
-    respond_to do |format|
       if @rock.update(rock_params)
-        format.json { render :show, status: :ok, location: @rock }
+        render json: @rock, status: :ok
       else
-        format.json { render json: @rock.errors, status: :unprocessable_entity }
+        render json: @rock.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /rocks/1
@@ -83,6 +81,6 @@ class RocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_params
-      params.require(:rock).permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :type, :outcrop_uuid)
+      params.permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :type, :outcrop_id)
     end
 end
