@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="399db413-dab9-4b68-8c68-e2c7d0e6db4b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/rocks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/rocks_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/structure_photos_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/structure_photos_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-    </list>
+    <list default="true" id="399db413-dab9-4b68-8c68-e2c7d0e6db4b" name="Default" comment="" />
     <ignored path="RockDroidWebservice.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.bundle/" />
@@ -117,7 +113,7 @@
       <file leaf-file-name="routes.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="152">
               <caret line="38" column="76" selection-start-line="38" selection-start-column="76" selection-end-line="38" selection-end-column="76" />
               <folding />
             </state>
@@ -648,12 +644,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1504638847964</updated>
-      <workItem from="1504638850915" duration="31783000" />
+      <workItem from="1504638850915" duration="31885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31783000" />
+    <option name="totallyTimeSpent" value="31885000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="27" width="1256" height="726" extended-state="0" />
@@ -1160,7 +1156,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="152">
           <caret line="38" column="76" selection-start-line="38" selection-start-column="76" selection-end-line="38" selection-end-column="76" />
           <folding />
         </state>
