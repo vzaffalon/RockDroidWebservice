@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :rocks, except: [:show]
   resources :samples, except: [:show]
   resources :sample_photos, except: [:show]
-  resources :rock_structure_associations, except: [:show]
   resources :structure_photos, except: [:show,:create,:update]
   resources :structures, except: [:show]
   resources :outcrops, except: [:show]
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   get 'rocks/search/findById', controller: 'rocks', action: 'show'
   get 'samples/search/findById', controller: 'samples', action: 'show'
   get 'sample_photos/search/findById', controller: 'sample_photos', action: 'show'
-  get 'rock_structure_associations/search/findById', controller: 'rock_structure_associations', action: 'show'
+  get 'associations/search/findById', controller: 'rock_structure_associations', action: 'show'
   get 'structure_photos/search/findById', controller: 'structure_photos', action: 'show'
   get 'structures/search/findById', controller: 'structures', action: 'show'
   get 'outcrops/search/findById', controller: 'outcrops', action: 'show'
@@ -32,6 +31,12 @@ Rails.application.routes.draw do
   put 'samplePhotos', controller: 'sample_photos', action:'update'
   post 'rockPhotos', controller: 'rock_photos', action:'create'
   put 'rockPhotos', controller: 'rock_photos', action:'update'
+  post 'structurePhotos', controller: 'structure_photos', action:'create'
+  put 'structurePhotos', controller: 'structure_photos', action:'update'
+
+  put 'associations', controller: 'rock_structure_associations', action:'update'
+  post 'associations', controller: 'rock_structure_associations', action:'create'
+  get 'associations', controller: 'rock_structure_associations', action:'destroy'
 
 
 

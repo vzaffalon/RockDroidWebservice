@@ -84,6 +84,6 @@ class StructurePhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def structure_photo_params
-      params.permit(:uuid, :base64image, :filename,:deleted_at)
+      params.permit(:uuid, :base64image, :filename,:deleted_at,:structure_id)
     end
 end
