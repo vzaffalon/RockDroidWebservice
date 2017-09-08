@@ -81,6 +81,6 @@ class RocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_params
-      params.permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :type, :outcrop_id)
+      params.permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :rock_type, :outcrop_id,:deleted_at)
     end
 end

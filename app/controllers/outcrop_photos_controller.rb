@@ -83,6 +83,6 @@ class OutcropPhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def outcrop_photo_params
-      params.require(:outcrop_photo).permit(:uuid, :base64image, :filename, :outcrop_id)
+      params.require(:outcrop_photo).permit(:uuid, :base64image, :filename, :outcrop_id,:deleted_at)
     end
 end

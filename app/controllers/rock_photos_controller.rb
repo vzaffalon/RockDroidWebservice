@@ -83,6 +83,6 @@ class RockPhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_photo_params
-      params.permit(:uuid, :base64image, :filename, :rock_id)
+      params.permit(:uuid, :base64image, :filename, :rock_id,:deleted_at)
     end
 end

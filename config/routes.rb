@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :rock_photos, except: [:show]
+  resources :rock_photos, except: [:show,:create,:update]
   resources :rocks, except: [:show]
   resources :samples, except: [:show]
   resources :sample_photos, except: [:show]
   resources :rock_structure_associations, except: [:show]
-  resources :structure_photos, except: [:show]
+  resources :structure_photos, except: [:show,:create,:update]
   resources :structures, except: [:show]
   resources :outcrops, except: [:show]
-  resources :outcrop_photos, except: [:show]
+  resources :outcrop_photos, except: [:show,:create,:update]
   resources :stages, except: [:show]
   resources :projects, except: [:show]
   resources :users, except: [:show]
@@ -25,6 +25,13 @@ Rails.application.routes.draw do
   get 'stages/search/findById', controller: 'stages', action: 'show'
   get 'projects/search/findById', controller: 'projects', action: 'show'
   get 'users/search/findFirstByEmail', controller: 'users', action: 'show'
+
+  post 'outcropPhotos', controller: 'outcrop_photos', action:'create'
+  put 'outcropPhotos', controller: 'outcrop_photos', action:'update'
+  post 'samplePhotos', controller: 'sample_photos', action:'create'
+  put 'samplePhotos', controller: 'sample_photos', action:'update'
+  post 'rockPhotos', controller: 'rock_photos', action:'create'
+  put 'rockPhotos', controller: 'rock_photos', action:'update'
 
 
 

@@ -83,6 +83,6 @@ class RockStructureAssociationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rock_structure_association_params
-      params.permit(:uuid, :structure_id, :rock_id, :outcrop_id)
+      params.permit(:uuid, :structure_id, :rock_id, :outcrop_id,:deleted_at)
     end
 end

@@ -87,6 +87,6 @@ class StructuresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def structure_params
-      params.permit(:uuid, :description, :dip, :dip_direction, :name, :phase, :type, :outcrop_id)
+      params.permit(:uuid, :description, :dip, :dip_direction, :name, :phase, :structure_type, :outcrop_id,:deleted_at)
     end
 end

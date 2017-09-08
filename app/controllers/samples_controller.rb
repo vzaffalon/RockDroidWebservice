@@ -83,6 +83,6 @@ class SamplesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sample_params
-      params.permit(:uui, :name, :outcrop_id)
+      params.permit(:uuid, :name, :outcrop_id,:deleted_at)
     end
 end
