@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :rock_photos, except: [:show,:create,:update]
+  resources :rock_photos
   resources :rocks, except: [:show]
   resources :samples, except: [:show]
-  resources :sample_photos, except: [:show]
-  resources :structure_photos, except: [:show,:create,:update]
+  resources :sample_photos
+  resources :structure_photos
   resources :structures, except: [:show]
   resources :outcrops, except: [:show]
-  resources :outcrop_photos, except: [:show,:create,:update]
+  resources :outcrop_photos
   resources :stages, except: [:show]
   resources :projects, except: [:show]
   resources :users, except: [:show]

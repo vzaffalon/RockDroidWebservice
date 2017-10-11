@@ -78,6 +78,9 @@ class OutcropPhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_outcrop_photo
+      if params[:uuid].nil?
+        params[:uuid] = params[:id]
+      end
       @outcrop_photo = OutcropPhoto.find(params[:uuid])
     end
 

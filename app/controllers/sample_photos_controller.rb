@@ -79,6 +79,9 @@ class SamplePhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sample_photo
+      if params[:uuid].nil?
+        params[:uuid] = params[:id]
+      end
       @sample_photo = SamplePhoto.find(params[:uuid])
     end
 
