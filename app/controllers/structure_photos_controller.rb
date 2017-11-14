@@ -79,6 +79,9 @@ class StructurePhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_structure_photo
+      if params[:uuid].nil?
+        params[:uuid] = params[:id]
+      end
       @structure_photo = StructurePhoto.find(params[:uuid])
     end
 

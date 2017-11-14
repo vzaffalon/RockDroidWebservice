@@ -78,6 +78,9 @@ class RockPhotosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rock_photo
+      if params[:uuid].nil?
+        params[:uuid] = params[:id]
+      end
       @rock_photo = RockPhoto.find(params[:uuid])
     end
 
