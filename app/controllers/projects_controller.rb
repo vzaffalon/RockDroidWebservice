@@ -71,14 +71,13 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'projeto excluido'} , status: :ok
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
+      puts params[:uuid]
       @project = Project.find(params[:uuid])
     end
 

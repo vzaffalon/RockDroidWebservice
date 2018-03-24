@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :projects, except: [:show]
   resources :users, except: [:show]
 
+  delete 'projects', controller: 'projects', action: 'destroy'
+
   get 'rock_photos/search/findById', controller: 'rock_photos', action: 'show'
   get 'rocks/search/findById', controller: 'rocks', action: 'show'
   get 'samples/search/findById', controller: 'samples', action: 'show'
@@ -37,8 +39,4 @@ Rails.application.routes.draw do
   put 'associations', controller: 'rock_structure_associations', action:'update'
   post 'associations', controller: 'rock_structure_associations', action:'create'
   get 'associations', controller: 'rock_structure_associations', action:'destroy'
-
-
-
-
 end
