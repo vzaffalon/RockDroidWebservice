@@ -70,9 +70,7 @@ class RocksController < ApplicationController
   # DELETE /rocks/1.json
   def destroy
     @rock.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Pedra Excluida'} , status: :ok
   end
 
   private

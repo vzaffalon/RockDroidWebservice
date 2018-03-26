@@ -8,6 +8,15 @@ class Rock < ApplicationRecord
     self.persisted_time = DateTime.now.strftime('%Q')
   end
 
-  validates_presence_of :uuid, message: 'missing_field'
+  before_create :generate_token
+
+  protected
+
+  def generate_token
+    self.uuid = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless Rock.exists?(uuid: random_token)
+    end
+  end
 
 end

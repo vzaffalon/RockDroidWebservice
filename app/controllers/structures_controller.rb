@@ -74,9 +74,7 @@ class StructuresController < ApplicationController
   # DELETE /structures/1.json
   def destroy
     @structure.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Estrutura Excluida'} , status: :ok
   end
 
   private

@@ -71,9 +71,7 @@ class StructurePhotosController < ApplicationController
   # DELETE /structure_photos/1.json
   def destroy
     @structure_photo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Foto Excluida'} , status: :ok
   end
 
   private

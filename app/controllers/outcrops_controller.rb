@@ -70,7 +70,7 @@ class OutcropsController < ApplicationController
   # DELETE /outcrops/1.json
   def destroy
      if @outcrop.destroy
-        head :no_content
+        render json: {message: 'Afloramento Excluido'} , status: :ok
      end
   end
 

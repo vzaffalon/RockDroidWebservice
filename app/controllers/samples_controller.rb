@@ -70,9 +70,7 @@ class SamplesController < ApplicationController
   # DELETE /samples/1.json
   def destroy
     @sample.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Amostra Excluida'} , status: :ok
   end
 
   private

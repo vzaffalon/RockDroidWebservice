@@ -73,9 +73,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Usuario Excluido'} , status: :ok
   end
 
   private

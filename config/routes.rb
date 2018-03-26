@@ -13,6 +13,12 @@ Rails.application.routes.draw do
   resources :users, except: [:show]
 
   delete 'projects', controller: 'projects', action: 'destroy'
+  delete 'rocks', controller: 'rocks', action: 'destroy'
+  delete 'samples', controller: 'samples', action: 'destroy'
+  delete 'structures', controller: 'structures', action: 'destroy'
+  delete 'stages', controller: 'stages', action: 'destroy'
+  delete 'users', controller: 'users', action: 'destroy'
+  delete 'outcrops', controller: 'outcrops', action: 'destroy'
 
   get 'rock_photos/search/findById', controller: 'rock_photos', action: 'show'
   get 'rocks/search/findById', controller: 'rocks', action: 'show'

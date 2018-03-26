@@ -70,9 +70,7 @@ class StagesController < ApplicationController
   # DELETE /stages/1.json
   def destroy
     @stage.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Etapa Excluida'} , status: :ok
   end
 
   private

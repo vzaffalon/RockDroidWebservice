@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    render json: {message: 'projeto excluido'} , status: :ok
+    render json: {message: 'Projeto Excluido'} , status: :ok
   end
 
   private

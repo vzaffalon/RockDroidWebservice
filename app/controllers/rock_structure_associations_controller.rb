@@ -70,9 +70,7 @@ class RockStructureAssociationsController < ApplicationController
   # DELETE /rock_structure_associations/1.json
   def destroy
     @rock_structure_association.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Associação Excluida'} , status: :ok
   end
 
   private
