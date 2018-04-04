@@ -81,6 +81,6 @@ class StagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stage_params
-      params.permit(:uuid, :city, :initialDate, :name, :uf, :project_id,:deleted_at)
+      params.permit(:uuid, :city, :initialDate,:initial_date, :name, :uf, :project_id,:deleted_at)
     end
 end

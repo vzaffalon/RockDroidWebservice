@@ -62,7 +62,7 @@ class OutcropsController < ApplicationController
       if @outcrop.update(outcrop_params)
         render json: @outcrop, status: :ok
       else
-        format.json { render json: @outcrop.errors, status: :unprocessable_entity }
+        render json: @outcrop.errors, status: :unprocessable_entity
       end
   end
 
