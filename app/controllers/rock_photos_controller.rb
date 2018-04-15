@@ -25,7 +25,15 @@ class RockPhotosController < ApplicationController
   # GET /rock_photos
   # GET /rock_photos.json
   def index
-    @rock_photos = RockPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @rock_photos = RockPhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @rock_photos
+  end
+
+  def list
+    @rock_photos = RockPhoto.where(rock_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @rock_photos
   end
 

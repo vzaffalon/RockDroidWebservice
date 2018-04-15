@@ -25,7 +25,10 @@ class OutcropsController < ApplicationController
   # GET /outcrops
   # GET /outcrops.json
   def index
-    @outcrops = Outcrop.paginate(page: params[:page], per_page: params[:size]).all
+    @outcrops = Outcrop.
+    paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc)
+    .all
     render json: @outcrops
   end
 

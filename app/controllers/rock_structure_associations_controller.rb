@@ -25,7 +25,8 @@ class RockStructureAssociationsController < ApplicationController
   # GET /rock_structure_associations
   # GET /rock_structure_associations.json
   def index
-    @rock_structure_associations = RockStructureAssociation.paginate(page: params[:page], per_page: params[:size]).all
+    @rock_structure_associations = RockStructureAssociation.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @rock_structure_associations
   end
 

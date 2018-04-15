@@ -1,6 +1,6 @@
 class Sample < ApplicationRecord
   self.primary_key = 'uuid'
-  has_many :sample_photos
+  has_many :sample_photos, dependent: :destroy
   belongs_to :outcrop
 
   before_create do

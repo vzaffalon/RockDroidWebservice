@@ -25,7 +25,14 @@ class RocksController < ApplicationController
   # GET /rocks
   # GET /rocks.json
   def index
-    @rocks = Rock.paginate(page: params[:page], per_page: params[:size]).all
+    @rocks = Rock.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @rocks
+  end
+
+  def list
+    @rocks = Rock.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @rocks
   end
 

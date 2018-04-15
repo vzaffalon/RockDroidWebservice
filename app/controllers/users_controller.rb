@@ -26,7 +26,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.paginate(page: params[:page], per_page: params[:size]).all
+    @users = User.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @users
   end
 

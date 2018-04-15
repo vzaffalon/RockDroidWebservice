@@ -25,7 +25,15 @@ class SamplePhotosController < ApplicationController
   # GET /sample_photos
   # GET /sample_photos.json
   def index
-    @sample_photos = SamplePhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @sample_photos = SamplePhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @sample_photos
+  end
+
+  def list
+    @sample_photos = SamplePhoto.where(sample_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @sample_photos
   end
 

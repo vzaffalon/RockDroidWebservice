@@ -25,7 +25,8 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.json
   def index
-    @samples = Sample.paginate(page: params[:page], per_page: params[:size]).all
+    @samples = Sample.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @samples
   end
 

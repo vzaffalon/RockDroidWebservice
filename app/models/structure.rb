@@ -1,8 +1,8 @@
 class Structure < ApplicationRecord
   self.primary_key = 'uuid'
   belongs_to :outcrop
-  has_many :rock_structure_associations
-  has_many :structure_photo
+  has_many :rock_structure_associations, dependent: :destroy
+  has_many :structure_photo, dependent: :destroy
 
   before_create do
     self.persisted_time = DateTime.now.strftime('%Q')

@@ -26,7 +26,8 @@ class StructuresController < ApplicationController
   # GET /structures
   # GET /structures.json
   def index
-    @structures = Structure.paginate(page: params[:page], per_page: params[:size]).all
+    @structures = Structure.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @structures
   end
 

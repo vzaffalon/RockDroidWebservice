@@ -25,7 +25,8 @@ class StagesController < ApplicationController
   # GET /stages
   # GET /stages.json
   def index
-    @stages = Stage.paginate(page: params[:page], per_page: params[:size]).all
+    @stages = Stage.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @stages
   end
 

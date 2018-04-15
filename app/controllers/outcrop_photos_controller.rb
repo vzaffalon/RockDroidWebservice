@@ -25,7 +25,15 @@ class OutcropPhotosController < ApplicationController
   # GET /outcrop_photos
   # GET /outcrop_photos.json
   def index
-    @outcrop_photos = OutcropPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @outcrop_photos = OutcropPhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @outcrop_photos
+  end
+
+  def list
+    @outcrop_photos = OutcropPhoto.where(outcrop_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @outcrop_photos
   end
 

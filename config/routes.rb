@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   resources :rock_photos
   resources :rocks, except: [:show]
   resources :samples, except: [:show]
-  resources :sample_photos
-  resources :structure_photos
+  resources :sample_photos, except: [:show]
+  resources :structure_photos, except: [:show]
   resources :structures, except: [:show]
   resources :outcrops, except: [:show]
-  resources :outcrop_photos
+  resources :outcrop_photos, except: [:show]
   resources :stages, except: [:show]
   resources :projects, except: [:show]
   resources :users, except: [:show]
@@ -32,6 +32,12 @@ Rails.application.routes.draw do
   get 'stages/search/findById', controller: 'stages', action: 'show'
   get 'projects/search/findById', controller: 'projects', action: 'show'
   get 'users/search/findFirstByEmail', controller: 'users', action: 'show'
+
+
+  get 'outcrop/:id/outcrop_photos', controller: 'outcrop_photos', action: 'list'
+  get 'rock/:id/rock_photos', controller: 'rock_photos', action: 'list'
+  get 'sample/:id/sample_photos', controller: 'sample_photos', action: 'list'
+  get 'structure/:id/structure_photos', controller: 'structure_photos', action: 'list'
 
   post 'outcropPhotos', controller: 'outcrop_photos', action:'create'
   put 'outcropPhotos', controller: 'outcrop_photos', action:'update'

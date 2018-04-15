@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   self.primary_key = 'uuid'
-  has_many :projects
+  has_many :projects, dependent: :destroy
 
   before_create do
     self.persisted_time = DateTime.now.strftime('%Q')

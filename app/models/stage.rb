@@ -1,6 +1,6 @@
 class Stage < ApplicationRecord
   self.primary_key = 'uuid'
-  has_many :outcrops
+  has_many :outcrops, dependent: :destroy
   belongs_to :project
 
   before_create :generate_token

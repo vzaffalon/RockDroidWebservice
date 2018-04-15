@@ -25,7 +25,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.paginate(page: params[:page], per_page: params[:size]).all
+    @projects = Project.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @projects
   end
 
