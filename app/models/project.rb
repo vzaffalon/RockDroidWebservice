@@ -2,6 +2,8 @@ class Project < ApplicationRecord
   self.primary_key = 'uuid'
   has_many :stages, dependent: :destroy
   belongs_to :user
+  validates_presence_of :name
+  validates_presence_of :user_id
 
   before_create :generate_token
 

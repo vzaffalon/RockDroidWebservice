@@ -57,6 +57,11 @@ class OutcropPhotosController < ApplicationController
   def create
     @outcrop_photo = OutcropPhoto.new(outcrop_photo_params)
 
+    # verifytImageExists = OutcropPhoto.where("outcrop_id = ? AND base64image = ?",params[:outcrop_id],params[:base64image])
+    # if(verifytImageExists.length > 0)
+    #   render json: {error: 'imagem já existe'}, status: :unprocessable_entity
+    # end
+
       if @outcrop_photo.save
           render json: @outcrop_photo, status: :created
       else

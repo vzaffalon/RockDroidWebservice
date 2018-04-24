@@ -2,6 +2,8 @@ class Sample < ApplicationRecord
   self.primary_key = 'uuid'
   has_many :sample_photos, dependent: :destroy
   belongs_to :outcrop
+  validates_presence_of :name
+  validates_presence_of :outcrop_id
 
   before_create do
     self.persisted_time = DateTime.now.strftime('%Q')

@@ -6,6 +6,10 @@ class Outcrop < ApplicationRecord
   has_many :rocks, dependent: :destroy
   has_many :samples, dependent: :destroy
   has_many :rock_structure_associations, dependent: :destroy
+  validates_presence_of :name
+  validates_presence_of :latitude
+  validates_presence_of :longitude
+  validates_presence_of :stage_id
 
   before_create do
     self.persisted_time = DateTime.now.strftime('%Q')

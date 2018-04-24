@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   delete 'users', controller: 'users', action: 'destroy'
   delete 'outcrops', controller: 'outcrops', action: 'destroy'
 
+
+  delete 'outcrop_photos', controller: 'outcrop_photos', action: 'destroy'
+
   get 'rock_photos/search/findById', controller: 'rock_photos', action: 'show'
   get 'rocks/search/findById', controller: 'rocks', action: 'show'
   get 'samples/search/findById', controller: 'samples', action: 'show'

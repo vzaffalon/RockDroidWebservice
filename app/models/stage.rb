@@ -5,6 +5,10 @@ class Stage < ApplicationRecord
 
   before_create :generate_token
 
+  validates_presence_of :name
+  validates_presence_of :initial_date
+  validates_presence_of :project_id
+
   before_create do
     self.persisted_time = DateTime.now.strftime('%Q')
   end
