@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,9 +26,16 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.paginate(page: params[:page], per_page: params[:size])
-    .order(created_at: :desc).all
-    render json: @projects
+    if @user.is_teacher
+      @projects = Project.paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc).all
+      render json: @projects
+    else
+      @projects = Project.where(user_id: @user.uuid).paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc)
+                      .all
+      render json: @projects
+    end
   end
 
   # GET /projects/1

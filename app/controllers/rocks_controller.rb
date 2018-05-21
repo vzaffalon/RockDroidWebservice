@@ -1,4 +1,5 @@
 class RocksController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_rock, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,9 +26,16 @@ class RocksController < ApplicationController
   # GET /rocks
   # GET /rocks.json
   def index
-    @rocks = Rock.paginate(page: params[:page], per_page: params[:size])
-    .order(created_at: :desc).all
-    render json: @rocks
+    if params[:outcrop_id]
+      @rocks = Rock.where(outcrop_id: params[:outcrop_id])
+                   .paginate(page: params[:page], per_page: params[:size])
+                   .order(created_at: :desc).all
+      render json: @rocks
+    else
+      @rocks = Rock.paginate(page: params[:page], per_page: params[:size])
+                   .order(created_at: :desc).all
+      render json: @rocks
+    end
   end
 
   def list

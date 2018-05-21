@@ -1,4 +1,5 @@
 class OutcropPhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_outcrop_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!

@@ -31,7 +31,7 @@ class StructurePhotosController < ApplicationController
   end
 
   def list
-    @structure_photos = StructurePhoto.where(sample_id: params[:id])
+    @structure_photos = StructurePhoto.where(structure_id: params[:id])
     .paginate(page: params[:page], per_page: params[:size])
     .order(created_at: :desc).all
     render json: @structure_photos

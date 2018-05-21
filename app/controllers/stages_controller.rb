@@ -1,4 +1,5 @@
 class StagesController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_stage, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,9 +26,16 @@ class StagesController < ApplicationController
   # GET /stages
   # GET /stages.json
   def index
-    @stages = Stage.paginate(page: params[:page], per_page: params[:size])
-    .order(created_at: :desc).all
-    render json: @stages
+    if params[:project_id]
+      @stages = Stage.where(project_id: params[:project_id])
+                    .paginate(page: params[:page], per_page: params[:size])
+                    .order(created_at: :desc).all
+      render json: @stages
+    else
+      @stages = Stage.paginate(page: params[:page], per_page: params[:size])
+                    .order(created_at: :desc).all
+      render json: @stages
+    end
   end
 
   # GET /stages/1

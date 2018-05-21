@@ -1,4 +1,5 @@
 class RockPhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_rock_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!

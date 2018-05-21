@@ -1,4 +1,5 @@
 class RockStructureAssociationsController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_rock_structure_association, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -27,6 +28,11 @@ class RockStructureAssociationsController < ApplicationController
   def index
     @rock_structure_associations = RockStructureAssociation.paginate(page: params[:page], per_page: params[:size])
     .order(created_at: :desc).all
+    render json: @rock_structure_associations
+  end
+
+  def find_rock_structure_associations
+    @rock_structure_associations = Structure.joins("INNER JOIN rock_structure_associations ON structures.uuid = rock_structure_associations.structure_id where rock_structure_associations.rock_id = '#{params[:rock_id]}' and rock_structure_associations.outcrop_id = '#{params[:outcrop_id]}'")
     render json: @rock_structure_associations
   end
 
@@ -65,6 +71,15 @@ class RockStructureAssociationsController < ApplicationController
       else
         render json: @rock_structure_association.errors, status: :unprocessable_entity
       end
+  end
+
+  def delete_rock_structure_association_by_rock
+    @rock_structure_association = RockStructureAssociation.where("rock_structure_associations.rock_id = '#{params[:rock_id]}' and rock_structure_associations.structure_id = '#{params[:structure_id]}' and rock_structure_associations.outcrop_id = '#{params[:outcrop_id]}'").take
+    if @rock_structure_association.destroy
+      render json: {message: 'Associação Excluida'} , status: :ok
+    else
+      render json: @rock_structure_association.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /rock_structure_associations/1

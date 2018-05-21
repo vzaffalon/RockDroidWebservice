@@ -3,8 +3,10 @@ class Structure < ApplicationRecord
   belongs_to :outcrop
   has_many :rock_structure_associations, dependent: :destroy
   has_many :structure_photo, dependent: :destroy
-  validates_presence_of :name
-  validates_presence_of :description
+  validates_presence_of :description,  :unless => lambda { self.structure_type == 1 }
+  validates_presence_of :dip_direction,  :unless => lambda { self.structure_type == 0 }
+  validates_presence_of :dip,  :unless => lambda { self.structure_type == 0 }
+  validates_presence_of :name,  :unless => lambda { self.structure_type == 0 }
   validates_presence_of :outcrop_id
 
   before_create do

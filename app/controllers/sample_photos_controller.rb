@@ -1,4 +1,5 @@
 class SamplePhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_sample_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!

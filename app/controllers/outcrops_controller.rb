@@ -1,4 +1,5 @@
 class OutcropsController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_outcrop, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,11 +26,41 @@ class OutcropsController < ApplicationController
   # GET /outcrops
   # GET /outcrops.json
   def index
-    @outcrops = Outcrop.
-    paginate(page: params[:page], per_page: params[:size])
-    .order(created_at: :desc)
-    .all
-    render json: @outcrops
+    if params[:stage_id]
+      @outcrops = Outcrop.where(stage_id: params[:stage_id])
+                      .paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc)
+                      .all
+      render json: @outcrops
+
+    else
+      @outcrops = Outcrop.
+          paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc)
+                      .all
+      render json: @outcrops
+    end
+
+  end
+
+  def user_outcrops
+    @outcrops = []
+    if params[:user_id]
+      @projects = Project.where(user_id: params[:user_id])
+      for project in @projects
+        @stages = project.stages
+        for stage in @stages
+          for outcrop in stage.outcrops
+           @outcrops.push(outcrop)
+          end
+        end
+      end
+      render json: @outcrops
+    else
+      @outcrops = Outcrop.all
+      render json: @outcrops
+    end
+
   end
 
   # GET /outcrops/1

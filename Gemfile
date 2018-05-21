@@ -37,6 +37,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'rails_admin', '~> 1.2'
 
+gem 'bcrypt', '~> 3.1.6'
+
 # Paginação
 gem 'will_paginate', '~> 3.0'
 

@@ -38,6 +38,11 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  def show_by_id
+    @user = User.where('uuid = ?',params[:id]).take
+    render json: @user
+  end
+
   # GET /users/new
   def new
     @user = User.new
@@ -51,13 +56,27 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     aux = user_params
-    @user = User.new(aux)
-
+    @aux_user = User.where('email = ?',aux[:email]).take
+    if @aux_user
+      render json: {error: 'usuario ja existe'}, status: :unprocessable_entity
+    else
+      @user = User.new(user_params)
+      @user.password_hash = params[:password]
       if @user.save
-        render json: {}, status: 200
+        render json: @user, status: 200
       else
           render json: @user.errors, status: :unprocessable_entity
       end
+    end
+  end
+
+  def login
+    @user = User.find_by_email(params[:email])
+    if @user.password_hash == params[:password_hash]
+      render json: @user, status: :ok
+    else
+      render json: {error: 'Email ou senha incorretos'} , status: :unauthorized
+    end
   end
 
   # PATCH/PUT /users/1
@@ -85,6 +104,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:uuid, :email, :name, :password_hash, :deleted_at)
+      params.permit(:uuid, :email, :name, :deleted_at,:password_hash,:is_teacher,:user_image)
     end
 end
