@@ -27,9 +27,17 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     if @user.is_teacher
+      @users = []
       @projects = Project.paginate(page: params[:page], per_page: params[:size])
                       .order(created_at: :desc).all
-      render json: @projects
+      for @project in @projects
+        @user = User.where(uuid: @project.user_id).take
+        @users.push(@user)
+      end
+      @response = {}
+      @response['projects'] = @projects
+      @response['users'] = @users
+      render json: @response
     else
       @projects = Project.where(user_id: @user.uuid).paginate(page: params[:page], per_page: params[:size])
                       .order(created_at: :desc)

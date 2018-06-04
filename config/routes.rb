@@ -67,4 +67,10 @@ Rails.application.routes.draw do
   put 'associations', controller: 'rock_structure_associations', action:'update'
   post 'associations', controller: 'rock_structure_associations', action:'create'
   get 'associations', controller: 'rock_structure_associations', action:'destroy'
+
+
+  get 'statistics/photos_list',controller: 'statistics', action: 'photos_list'
+  get 'statistics/sizes',controller: 'statistics', action: 'sizes'
+  get 'statistics/altitudes', controller: 'statistics', action: 'altitudes'
+  get 'statistics/stages_by_uf', controller: 'statistics', action: 'stages_by_uf'
 end
