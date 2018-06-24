@@ -73,4 +73,6 @@ Rails.application.routes.draw do
   get 'statistics/sizes',controller: 'statistics', action: 'sizes'
   get 'statistics/altitudes', controller: 'statistics', action: 'altitudes'
   get 'statistics/stages_by_uf', controller: 'statistics', action: 'stages_by_uf'
+
+  get 'projects/get_all_project_data', controller: 'projects', action: 'get_all_project_data'
 end

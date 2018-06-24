@@ -42,7 +42,10 @@ class ProjectsController < ApplicationController
       @projects = Project.where(user_id: @user.uuid).paginate(page: params[:page], per_page: params[:size])
                       .order(created_at: :desc)
                       .all
-      render json: @projects
+
+      @response = {}
+      @response['projects'] = @projects
+      render json: @response
     end
   end
 
@@ -71,6 +74,46 @@ class ProjectsController < ApplicationController
       else
           render json: @project.errors, status: :unprocessable_entity
       end
+  end
+
+
+  def get_all_project_data
+
+    @response = {}
+    @projects = []
+    @stages = []
+    @outcrops = []
+    @rocks = []
+    @structures = []
+    @samples = []
+
+    @project = Project.find(params[:uuid])
+    @projects.push(@project)
+    for @stage in @project.stages
+      @stages.push(@stage)
+      for @outcrop in @stage.outcrops
+        @outcrops.push(@outcrop)
+        for @rock in @outcrop.rocks
+            @rocks.push(@rock)
+        end
+        for @sample in @outcrop.samples
+            @samples.push(@sample)
+        end
+        for @structure in @outcrop.structures
+          @structures.push(@structure)
+        end
+      end
+
+
+    end
+
+    @response['projects'] = @projects
+    @response['stages'] = @stages
+    @response['outcrops'] = @outcrops
+    @response['rocks'] = @rocks
+    @response['structures'] = @structures
+    @response['samples'] = @samples
+    render json: @response, status: :ok
   end
 
   # PATCH/PUT /projects/1

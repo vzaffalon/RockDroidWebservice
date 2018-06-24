@@ -2,7 +2,7 @@ class Structure < ApplicationRecord
   self.primary_key = 'uuid'
   belongs_to :outcrop
   has_many :rock_structure_associations, dependent: :destroy
-  has_many :structure_photo, dependent: :destroy
+  has_many :structure_photos, dependent: :destroy
   validates_presence_of :description,  :unless => lambda { self.structure_type == 1 }
   validates_presence_of :dip_direction,  :unless => lambda { self.structure_type == 0 }
   validates_presence_of :dip,  :unless => lambda { self.structure_type == 0 }

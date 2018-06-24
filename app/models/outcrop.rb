@@ -2,7 +2,7 @@ class Outcrop < ApplicationRecord
   self.primary_key = 'uuid'
   belongs_to :stage
   has_many :outcrop_photos, dependent: :destroy
-  has_many :structure, dependent: :destroy
+  has_many :structures, dependent: :destroy
   has_many :rocks, dependent: :destroy
   has_many :samples, dependent: :destroy
   has_many :rock_structure_associations, dependent: :destroy
