@@ -25,7 +25,15 @@ class StructurePhotosController < ApplicationController
   # GET /structure_photos
   # GET /structure_photos.json
   def index
-    @structure_photos = StructurePhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @structure_photos = StructurePhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @structure_photos
+  end
+
+  def list
+    @structure_photos = StructurePhoto.where(structure_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @structure_photos
   end
 
@@ -71,9 +79,7 @@ class StructurePhotosController < ApplicationController
   # DELETE /structure_photos/1.json
   def destroy
     @structure_photo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Foto Excluida'} , status: :ok
   end
 
   private

@@ -1,4 +1,5 @@
 class StructuresController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_structure, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -26,8 +27,16 @@ class StructuresController < ApplicationController
   # GET /structures
   # GET /structures.json
   def index
-    @structures = Structure.paginate(page: params[:page], per_page: params[:size]).all
-    render json: @structures
+    if params[:outcrop_id]
+      @structures = Structure.where(outcrop_id: params[:outcrop_id])
+                        .paginate(page: params[:page], per_page: params[:size])
+                        .order(created_at: :desc).all
+      render json: @structures
+    else
+      @structures = Structure.paginate(page: params[:page], per_page: params[:size])
+                        .order(created_at: :desc).all
+      render json: @structures
+    end
   end
 
   # GET /structures/1
@@ -74,9 +83,7 @@ class StructuresController < ApplicationController
   # DELETE /structures/1.json
   def destroy
     @structure.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Estrutura Excluida'} , status: :ok
   end
 
   private

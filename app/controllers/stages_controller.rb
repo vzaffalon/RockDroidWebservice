@@ -1,4 +1,5 @@
 class StagesController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_stage, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,8 +26,16 @@ class StagesController < ApplicationController
   # GET /stages
   # GET /stages.json
   def index
-    @stages = Stage.paginate(page: params[:page], per_page: params[:size]).all
-    render json: @stages
+    if params[:project_id]
+      @stages = Stage.where(project_id: params[:project_id])
+                    .paginate(page: params[:page], per_page: params[:size])
+                    .order(created_at: :desc).all
+      render json: @stages
+    else
+      @stages = Stage.paginate(page: params[:page], per_page: params[:size])
+                    .order(created_at: :desc).all
+      render json: @stages
+    end
   end
 
   # GET /stages/1
@@ -70,9 +79,7 @@ class StagesController < ApplicationController
   # DELETE /stages/1.json
   def destroy
     @stage.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Etapa Excluida'} , status: :ok
   end
 
   private
@@ -83,6 +90,6 @@ class StagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stage_params
-      params.permit(:uuid, :city, :initialDate, :name, :uf, :project_id,:deleted_at)
+      params.permit(:uuid, :city, :initialDate,:initial_date, :name, :uf, :project_id,:deleted_at)
     end
 end

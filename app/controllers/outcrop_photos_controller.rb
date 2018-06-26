@@ -1,4 +1,5 @@
 class OutcropPhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_outcrop_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,7 +26,15 @@ class OutcropPhotosController < ApplicationController
   # GET /outcrop_photos
   # GET /outcrop_photos.json
   def index
-    @outcrop_photos = OutcropPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @outcrop_photos = OutcropPhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @outcrop_photos
+  end
+
+  def list
+    @outcrop_photos = OutcropPhoto.where(outcrop_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @outcrop_photos
   end
 
@@ -49,6 +58,11 @@ class OutcropPhotosController < ApplicationController
   def create
     @outcrop_photo = OutcropPhoto.new(outcrop_photo_params)
 
+    # verifytImageExists = OutcropPhoto.where("outcrop_id = ? AND base64image = ?",params[:outcrop_id],params[:base64image])
+    # if(verifytImageExists.length > 0)
+    #   render json: {error: 'imagem já existe'}, status: :unprocessable_entity
+    # end
+
       if @outcrop_photo.save
           render json: @outcrop_photo, status: :created
       else
@@ -70,9 +84,7 @@ class OutcropPhotosController < ApplicationController
   # DELETE /outcrop_photos/1.json
   def destroy
     @outcrop_photo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Foto Excluida'} , status: :ok
   end
 
   private

@@ -6,7 +6,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.string :creator_id
       t.string :user_id
       t.integer :deleted_at, :limit => 8
-      t.float :persisted_time, null:false
+      t.float :persisted_time, null: false
 
       t.timestamps
     end

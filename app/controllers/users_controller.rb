@@ -26,7 +26,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.paginate(page: params[:page], per_page: params[:size]).all
+    @users = User.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @users
   end
 
@@ -34,6 +35,11 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.where('email = ?',params[:email]).take
+    render json: @user
+  end
+
+  def show_by_id
+    @user = User.where('uuid = ?',params[:id]).take
     render json: @user
   end
 
@@ -50,13 +56,27 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     aux = user_params
-    @user = User.new(aux)
-
+    @aux_user = User.where('email = ?',aux[:email]).take
+    if @aux_user
+      render json: {error: 'usuario ja existe'}, status: :unprocessable_entity
+    else
+      @user = User.new(user_params)
+      @user.password_hash = params[:password]
       if @user.save
-        render json: {}, status: 200
+        render json: @user, status: 200
       else
           render json: @user.errors, status: :unprocessable_entity
       end
+    end
+  end
+
+  def login
+    @user = User.find_by_email(params[:email])
+    if @user.password_hash == params[:password_hash]
+      render json: @user, status: :ok
+    else
+      render json: {error: 'Email ou senha incorretos'} , status: :unauthorized
+    end
   end
 
   # PATCH/PUT /users/1
@@ -73,9 +93,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Usuario Excluido'} , status: :ok
   end
 
   private
@@ -86,6 +104,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:uuid, :email, :name, :password_hash, :deleted_at)
+      params.permit(:uuid, :email, :name, :deleted_at,:password_hash,:is_teacher,:user_image)
     end
 end

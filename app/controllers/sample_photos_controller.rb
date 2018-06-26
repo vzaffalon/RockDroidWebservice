@@ -1,4 +1,5 @@
 class SamplePhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_sample_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,7 +26,15 @@ class SamplePhotosController < ApplicationController
   # GET /sample_photos
   # GET /sample_photos.json
   def index
-    @sample_photos = SamplePhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @sample_photos = SamplePhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @sample_photos
+  end
+
+  def list
+    @sample_photos = SamplePhoto.where(sample_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @sample_photos
   end
 
@@ -71,9 +80,7 @@ class SamplePhotosController < ApplicationController
   # DELETE /sample_photos/1.json
   def destroy
     @sample_photo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Foto Excluida'} , status: :ok
   end
 
   private

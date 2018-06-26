@@ -1,4 +1,5 @@
 class RockPhotosController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_rock_photo, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,7 +26,15 @@ class RockPhotosController < ApplicationController
   # GET /rock_photos
   # GET /rock_photos.json
   def index
-    @rock_photos = RockPhoto.paginate(page: params[:page], per_page: params[:size]).all
+    @rock_photos = RockPhoto.paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
+    render json: @rock_photos
+  end
+
+  def list
+    @rock_photos = RockPhoto.where(rock_id: params[:id])
+    .paginate(page: params[:page], per_page: params[:size])
+    .order(created_at: :desc).all
     render json: @rock_photos
   end
 
@@ -70,9 +79,7 @@ class RockPhotosController < ApplicationController
   # DELETE /rock_photos/1.json
   def destroy
     @rock_photo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Foto Excluida'} , status: :ok
   end
 
   private

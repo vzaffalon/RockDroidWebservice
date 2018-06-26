@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :verify_auth_header
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   before_action :underscore_params!
@@ -25,8 +26,27 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.paginate(page: params[:page], per_page: params[:size]).all
-    render json: @projects
+    if @user.is_teacher
+      @users = []
+      @projects = Project.paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc).all
+      for @project in @projects
+        @user = User.where(uuid: @project.user_id).take
+        @users.push(@user)
+      end
+      @response = {}
+      @response['projects'] = @projects
+      @response['users'] = @users
+      render json: @response
+    else
+      @projects = Project.where(user_id: @user.uuid).paginate(page: params[:page], per_page: params[:size])
+                      .order(created_at: :desc)
+                      .all
+
+      @response = {}
+      @response['projects'] = @projects
+      render json: @response
+    end
   end
 
   # GET /projects/1
@@ -56,6 +76,46 @@ class ProjectsController < ApplicationController
       end
   end
 
+
+  def get_all_project_data
+
+    @response = {}
+    @projects = []
+    @stages = []
+    @outcrops = []
+    @rocks = []
+    @structures = []
+    @samples = []
+
+    @project = Project.find(params[:uuid])
+    @projects.push(@project)
+    for @stage in @project.stages
+      @stages.push(@stage)
+      for @outcrop in @stage.outcrops
+        @outcrops.push(@outcrop)
+        for @rock in @outcrop.rocks
+            @rocks.push(@rock)
+        end
+        for @sample in @outcrop.samples
+            @samples.push(@sample)
+        end
+        for @structure in @outcrop.structures
+          @structures.push(@structure)
+        end
+      end
+
+
+    end
+
+    @response['projects'] = @projects
+    @response['stages'] = @stages
+    @response['outcrops'] = @outcrops
+    @response['rocks'] = @rocks
+    @response['structures'] = @structures
+    @response['samples'] = @samples
+    render json: @response, status: :ok
+  end
+
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
@@ -71,14 +131,13 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    render json: {message: 'Projeto Excluido'} , status: :ok
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
+      puts params[:uuid]
       @project = Project.find(params[:uuid])
     end
 

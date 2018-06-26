@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.float :persisted_time, null:false
       t.string :name
       t.string :password_hash
+      t.string :user_image
 
       t.timestamps
     end
