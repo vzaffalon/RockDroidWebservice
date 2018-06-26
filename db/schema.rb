@@ -172,7 +172,6 @@ ActiveRecord::Schema.define(version: 20180513185510) do
     t.float    "persisted_time",                 null: false
     t.string   "name"
     t.string   "password_hash"
-    t.string   "user_image"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.boolean  "is_teacher",     default: false

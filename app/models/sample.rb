@@ -14,9 +14,11 @@ class Sample < ApplicationRecord
   protected
 
   def generate_token
-    self.uuid = loop do
-      random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token unless Sample.exists?(uuid: random_token)
+    if self.uuid.nil?
+      self.uuid = loop do
+        random_token = SecureRandom.urlsafe_base64(nil, false)
+        break random_token unless Sample.exists?(uuid: random_token)
+      end
     end
   end
 end
