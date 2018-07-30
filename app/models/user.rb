@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include BCrypt
+  has_secure_password
   self.primary_key = 'uuid'
   has_many :projects, dependent: :destroy
 
@@ -11,6 +12,15 @@ class User < ApplicationRecord
 
   before_create :generate_token
 
+  def password
+    @password ||= Password.new(password_digest)
+  end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_digest = @password
+  end
+
   protected
 
   def generate_token
@@ -20,14 +30,5 @@ class User < ApplicationRecord
         break random_token unless User.exists?(uuid: random_token)
       end
     end
-  end
-
-  def password
-    @password ||= Password.new(password_hash)
-  end
-
-  def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
   end
 end

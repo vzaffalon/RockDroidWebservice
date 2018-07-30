@@ -4,12 +4,16 @@ class ApplicationController < ActionController::Base
 
   def verify_auth_header
     header = request.headers["Authorization"]
-    removed_basic = header.gsub('Basic ', '')
-    auth_header_data = Base64.decode64(removed_basic).split(":")
-    email = auth_header_data[0]
-    password = auth_header_data[1]
+    begin  # "try" block
+      removed_basic = header.gsub('Basic ', '')
+      auth_header_data = removed_basic.split(":")
+    rescue #
+      auth_header_data = header.split(":")
+    end
+    email = Base64.decode64(auth_header_data[0])
+    password = Base64.decode64(auth_header_data[1])
     @user = User.find_by_email(email)
-    if @user.password_hash == password
+    if @user.password_digest == password
     else
       render json: {error: 'Authorization token header invalid'} , status: :unauthorized
     end

@@ -1,5 +1,5 @@
 RailsAdmin.config do |config|
-
+  include BCrypt
   ### Popular gems integration
 
   ## == Devise ==
@@ -22,6 +22,13 @@ RailsAdmin.config do |config|
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
+  config.authenticate_with do
+    authenticate_or_request_with_http_basic('Login required') do |username, password|
+      user = User.where(email:username).first
+      BCrypt::Password.new(user.password_digest) == password
+    end
+  end
+
 
   config.actions do
     dashboard                     # mandatory
@@ -32,7 +39,7 @@ RailsAdmin.config do |config|
     show
     edit
     delete
-    # show_in_app
+    show_in_app
 
     ## With an audit adapter, you can add:
     # history_index
