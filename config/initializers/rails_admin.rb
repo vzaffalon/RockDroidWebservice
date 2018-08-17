@@ -22,12 +22,12 @@ RailsAdmin.config do |config|
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
-  config.authenticate_with do
-    authenticate_or_request_with_http_basic('Login required') do |username, password|
-      user = User.where(email:username).first
-      BCrypt::Password.new(user.password_digest) == password
-    end
-  end
+  # config.authenticate_with do
+  #   authenticate_or_request_with_http_basic('Login required') do |username, password|
+  #     user = User.where(email:username).first
+  #     BCrypt::Password.new(user.password_digest) == password
+  #   end
+  # end
 
 
   config.actions do
