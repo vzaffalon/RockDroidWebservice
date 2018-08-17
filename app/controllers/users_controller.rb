@@ -62,6 +62,7 @@ class UsersController < ApplicationController
     else
       @user = User.new(user_params)
       @user.password_hash = params[:password_hash]
+      # @user.password = params[:password]
       if @user.save
         render json: @user, status: 200
       else
@@ -72,7 +73,7 @@ class UsersController < ApplicationController
 
   def login
     @user = User.find_by_email(params[:email])
-    if @user.password_hash == params[:password_hash]
+    if @user.password == params[:password]
       render json: @user, status: :ok
     else
       render json: {error: 'Email ou senha incorretos'} , status: :unauthorized
@@ -104,6 +105,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:uuid, :email, :name, :deleted_at,:password_hash,:is_teacher,:user_image)
+      params.permit(:uuid, :email, :name, :deleted_at,:is_teacher,:user_image)
     end
 end
