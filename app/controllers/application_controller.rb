@@ -6,12 +6,13 @@ class ApplicationController < ActionController::Base
     header = request.headers["Authorization"]
     begin  # "try" block
       removed_basic = header.gsub('Basic ', '')
-      auth_header_data = removed_basic.split(":")
+      decoded_basic = Base64.decode64(removed_basic)
+      auth_header_data = decoded_basic.split(":")
     rescue #
       auth_header_data = header.split(":")
     end
-    email = Base64.decode64(auth_header_data[0])
-    password = Base64.decode64(auth_header_data[1])
+    email = auth_header_data[0]
+    password = auth_header_data[1]
     @user = User.find_by_email(email)
     if @user.password_digest == password
     else
