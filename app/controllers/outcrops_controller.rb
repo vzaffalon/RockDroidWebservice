@@ -51,7 +51,7 @@ class OutcropsController < ApplicationController
         @stages = project.stages
         for stage in @stages
           for outcrop in stage.outcrops
-           @outcrops.push(outcrop)
+            @outcrops.push(outcrop)
           end
         end
       end
@@ -81,41 +81,45 @@ class OutcropsController < ApplicationController
   # POST /outcrops
   # POST /outcrops.json
   def create
-      @outcrop = Outcrop.new(outcrop_params)
+    @outcrop = Outcrop.new(outcrop_params)
 
-      if @outcrop.save
-        render json: @outcrop, status: :created
-      else
-        render json: @outcrop.errors, status: :unprocessable_entity
-      end
+    if @outcrop.save
+      render json: @outcrop, status: :created
+    else
+      render json: @outcrop.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /outcrops/1
   # PATCH/PUT /outcrops/1.json
   def update
-      if @outcrop.update(outcrop_params)
-        render json: @outcrop, status: :ok
-      else
-        render json: @outcrop.errors, status: :unprocessable_entity
-      end
+    if params[:updated_at].present?
+      return render json: @outcrop, status: :ok if params[:updated_at].to_datetime < @outcrop.updated_at
+    end
+
+    if @outcrop.update(outcrop_params)
+      render json: @outcrop, status: :ok
+    else
+      render json: @outcrop.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /outcrops/1
   # DELETE /outcrops/1.json
   def destroy
-     if @outcrop.destroy
-        render json: {message: 'Afloramento Excluido'} , status: :ok
-     end
+    if @outcrop.destroy
+      render json: {message: 'Afloramento Excluido'}, status: :ok
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_outcrop
-      @outcrop = Outcrop.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_outcrop
+    @outcrop = Outcrop.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def outcrop_params
-      params.permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_id,:deleted_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def outcrop_params
+    params.permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_id, :deleted_at, :updated_at)
+  end
 end

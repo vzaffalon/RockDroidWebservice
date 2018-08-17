@@ -61,7 +61,8 @@ class UsersController < ApplicationController
       render json: {error: 'usuario ja existe'}, status: :unprocessable_entity
     else
       @user = User.new(user_params)
-      @user.password = params[:password]
+      @user.password_hash = params[:password_hash]
+      # @user.password = params[:password]
       if @user.save
         render json: @user, status: 200
       else

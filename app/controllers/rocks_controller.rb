@@ -40,7 +40,7 @@ class RocksController < ApplicationController
 
   def list
     @rocks = Rock.paginate(page: params[:page], per_page: params[:size])
-    .order(created_at: :desc).all
+                 .order(created_at: :desc).all
     render json: @rocks
   end
 
@@ -64,38 +64,42 @@ class RocksController < ApplicationController
   def create
     @rock = Rock.new(rock_params)
 
-      if @rock.save
-        render json: @rock, status: :created
-      else
-        render json: @rock.errors, status: :unprocessable_entity
-      end
+    if @rock.save
+      render json: @rock, status: :created
+    else
+      render json: @rock.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /rocks/1
   # PATCH/PUT /rocks/1.json
   def update
-      if @rock.update(rock_params)
-        render json: @rock, status: :ok
-      else
-        render json: @rock.errors, status: :unprocessable_entity
-      end
+    if params[:updated_at].present?
+      return render json: @rock, status: :ok if params[:updated_at].to_datetime < @rock.updated_at
+    end
+
+    if @rock.update(rock_params)
+      render json: @rock, status: :ok
+    else
+      render json: @rock.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /rocks/1
   # DELETE /rocks/1.json
   def destroy
     @rock.destroy
-    render json: {message: 'Pedra Excluida'} , status: :ok
+    render json: {message: 'Pedra Excluida'}, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_rock
-      @rock = Rock.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_rock
+    @rock = Rock.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def rock_params
-      params.permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :rock_type, :outcrop_id,:deleted_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def rock_params
+    params.permit(:uuid, :composition, :degree, :mineralogy, :name, :nomenclature, :size, :texture, :trama, :rock_type, :outcrop_id, :deleted_at, :updated_at)
+  end
 end

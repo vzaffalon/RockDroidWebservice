@@ -58,38 +58,42 @@ class SamplesController < ApplicationController
   def create
     @sample = Sample.new(sample_params)
 
-      if @sample.save
-        render json:@sample , status: :created
-      else
-        render json: @sample.errors, status: :unprocessable_entity
-      end
+    if @sample.save
+      render json: @sample, status: :created
+    else
+      render json: @sample.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /samples/1
   # PATCH/PUT /samples/1.json
   def update
-      if @sample.update(sample_params)
-        render json: @sample, status: :ok
-      else
-        render json: @sample.errors, status: :unprocessable_entity
-      end
+    if params[:updated_at].present?
+      return render json: @sample, status: :ok if params[:updated_at].to_datetime < @sample.updated_at
+    end
+
+    if @sample.update(sample_params)
+      render json: @sample, status: :ok
+    else
+      render json: @sample.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /samples/1
   # DELETE /samples/1.json
   def destroy
     @sample.destroy
-    render json: {message: 'Amostra Excluida'} , status: :ok
+    render json: {message: 'Amostra Excluida'}, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sample
-      @sample = Sample.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_sample
+    @sample = Sample.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def sample_params
-      params.permit(:uuid, :name, :outcrop_id,:deleted_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def sample_params
+    params.permit(:uuid, :name, :outcrop_id, :deleted_at, :updated_at)
+  end
 end

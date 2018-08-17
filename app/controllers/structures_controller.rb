@@ -59,23 +59,26 @@ class StructuresController < ApplicationController
   def create
     @structure = Structure.new(structure_params)
 
-      if @structure.save
-        render json: @structure, status: :created, location: @structure
-      else
-        render json: @structure.errors, status: :unprocessable_entity
-      end
+    if @structure.save
+      render json: @structure, status: :created, location: @structure
+    else
+      render json: @structure.errors, status: :unprocessable_entity
+    end
 
   end
 
   # PATCH/PUT /structures/1
   # PATCH/PUT /structures/1.json
   def update
+    if params[:updated_at].present?
+      return render json: @structure, status: :ok if params[:updated_at].to_datetime < @structure.updated_at
+    end
 
-      if @structure.update(structure_params)
-        render json: @structure, status: :ok
-      else
-        render json: @structure.errors, status: :unprocessable_entity
-      end
+    if @structure.update(structure_params)
+      render json: @structure, status: :ok
+    else
+      render json: @structure.errors, status: :unprocessable_entity
+    end
 
   end
 
@@ -83,17 +86,17 @@ class StructuresController < ApplicationController
   # DELETE /structures/1.json
   def destroy
     @structure.destroy
-    render json: {message: 'Estrutura Excluida'} , status: :ok
+    render json: {message: 'Estrutura Excluida'}, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_structure
-      @structure = Structure.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_structure
+    @structure = Structure.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def structure_params
-      params.permit(:uuid, :description, :dip, :dip_direction, :name, :phase, :structure_type, :outcrop_id,:deleted_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def structure_params
+    params.permit(:uuid, :description, :dip, :dip_direction, :name, :phase, :structure_type, :outcrop_id, :deleted_at, :updated_at)
+  end
 end
