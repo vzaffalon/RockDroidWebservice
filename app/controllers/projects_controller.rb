@@ -69,11 +69,11 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
 
-      if @project.save
-          render json: @project, status: :created
-      else
-          render json: @project.errors, status: :unprocessable_entity
-      end
+    if @project.save
+      render json: @project, status: :created
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
   end
 
 
@@ -94,10 +94,10 @@ class ProjectsController < ApplicationController
       for @outcrop in @stage.outcrops
         @outcrops.push(@outcrop)
         for @rock in @outcrop.rocks
-            @rocks.push(@rock)
+          @rocks.push(@rock)
         end
         for @sample in @outcrop.samples
-            @samples.push(@sample)
+          @samples.push(@sample)
         end
         for @structure in @outcrop.structures
           @structures.push(@structure)
@@ -119,30 +119,33 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    if params[:updated_at].present?
+      return render json: @project, status: :ok if params[:updated_at].to_datetime < @project.updated_at
+    end
 
-      if @project.update(project_params)
-        render json: @project, status: :ok
-      else
-        render json: @project.errors, status: :unprocessable_entity
-      end
+    if @project.update(project_params)
+      render json: @project, status: :ok
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    render json: {message: 'Projeto Excluido'} , status: :ok
+    render json: {message: 'Projeto Excluido'}, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      puts params[:uuid]
-      @project = Project.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    puts params[:uuid]
+    @project = Project.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.permit(:uuid, :name,:user_id, :deleted_at, :creation_date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.permit(:uuid, :name, :user_id, :deleted_at, :creation_date, :updated_at)
+  end
 end

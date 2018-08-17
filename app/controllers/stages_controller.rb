@@ -58,38 +58,42 @@ class StagesController < ApplicationController
   def create
     @stage = Stage.new(stage_params)
 
-      if @stage.save
-        render json: @stage, status: :created
-      else
-        render json: @stage.errors, status: :unprocessable_entity
-      end
+    if @stage.save
+      render json: @stage, status: :created
+    else
+      render json: @stage.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /stages/1
   # PATCH/PUT /stages/1.json
   def update
-      if @stage.update(stage_params)
-        render json: @stage, status: :ok
-      else
-        render json: @stage.errors, status: :unprocessable_entity
-      end
+    if params[:updated_at].present?
+      return render json: @stage, status: :ok if params[:updated_at].to_datetime < @stage.updated_at
+    end
+
+    if @stage.update(stage_params)
+      render json: @stage, status: :ok
+    else
+      render json: @stage.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /stages/1
   # DELETE /stages/1.json
   def destroy
     @stage.destroy
-    render json: {message: 'Etapa Excluida'} , status: :ok
+    render json: {message: 'Etapa Excluida'}, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_stage
-      @stage = Stage.find(params[:uuid])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_stage
+    @stage = Stage.find(params[:uuid])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def stage_params
-      params.permit(:uuid, :city, :initialDate,:initial_date, :name, :uf, :project_id,:deleted_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def stage_params
+    params.permit(:uuid, :city, :initialDate, :initial_date, :name, :uf, :project_id, :deleted_at, :updated_at)
+  end
 end
