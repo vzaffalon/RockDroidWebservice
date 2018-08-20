@@ -120,6 +120,6 @@ class OutcropsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def outcrop_params
-    params.permit(:uuid, :altitude, :dateTime, :description, :horizontal_datum, :latitude, :longitude, :name, :toponomy, :stage_id, :deleted_at, :updated_at)
+    params.permit(:uuid, :altitude, :dateTime, :description, :latitude, :longitude, :name, :toponomy, :stage_id, :deleted_at, :updated_at)
   end
 end

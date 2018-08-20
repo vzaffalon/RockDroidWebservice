@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180730033038) do
+ActiveRecord::Schema.define(version: 20180819233538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,20 +28,19 @@ ActiveRecord::Schema.define(version: 20180730033038) do
   end
 
   create_table "outcrops", id: false, force: :cascade do |t|
-    t.string   "uuid",             null: false
+    t.string   "uuid",           null: false
     t.float    "altitude"
     t.float    "date_time"
     t.string   "description"
-    t.string   "horizontal_datum"
     t.float    "latitude"
     t.float    "longitude"
     t.string   "name"
     t.string   "toponomy"
     t.string   "stage_id"
     t.bigint   "deleted_at"
-    t.float    "persisted_time",   null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.float    "persisted_time", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.index ["uuid"], name: "index_outcrops_on_uuid", using: :btree
   end
 

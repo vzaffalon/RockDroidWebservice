@@ -278,7 +278,7 @@ class StatisticsController < ApplicationController
             end
             for structure in outcrop.structures
               for structure_photo in structure.structure_photos
-                sample_photos.push(structure_photo)
+                structure_photos.push(structure_photo)
               end
             end
           end
